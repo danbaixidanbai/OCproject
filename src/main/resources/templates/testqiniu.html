@@ -1,0 +1,58 @@
+
+<html>
+<head>
+	<title>users</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+</head>
+<body>
+	<div class="table-responsive">
+  <table class="table" id="myTable">
+    <th></th>
+    <tr><td>id</td><td>username</td><td>password</td><td>phone</td></tr>
+	<input type="file" class="detail-img">
+	<a id="submit">tijiao</a>
+  </table>
+</div>
+<script src="/js/jquery.js"></script>
+<script type="text/javascript">
+
+
+$('#submit').click(function(){
+	var formData = new FormData();
+	var image=$('.detail-img')[0].files[0];
+	formData.append("image", image);
+	$.ajax({
+		url:'http://localhost:8080/api/test/qiniu',
+		//url:'http://localhost/api/users',
+		type:'post',
+		processData: false,
+		contentType : false,
+		dataType: 'json',
+		data:formData,
+        //crossDomain: true,
+		success:function(data){
+			console.log(data);
+			//for(var i=0;i<data.length;i++){
+			//	$('#myTable').append('<tr><td>'+data[i].id+'</td><td>'+data[i].username+'</td><td>'+data[i].password+'</td><td>'+data[i].phone+'</td></tr>');
+			//}
+			//$('#myTable').append
+		},
+		error:function(data){
+			console.log(data);
+			//console.log(data[0].id);
+
+		}
+	});
+});
+
+
+
+
+</script>
+</body>
+
+	
+
+
+</html>

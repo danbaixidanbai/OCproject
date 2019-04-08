@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<title>在线网校学习平台</title>
+		<link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
+		<link rel="stylesheet" href="/css/reset.css" type="text/css" />
+
+		<script type='text/javascript'
+				src='/js/common/common.js' charset='utf-8'></script>
+		<script type='text/javascript'
+				src='/js/common/jquery.js' charset='utf-8'></script>
+		<script type='text/javascript'
+				src='/js/user/register.js' charset='utf-8'></script>
+	</head>
+
+	<body>
+	<!-- 头部-start -->
+	<div class="f-header">
+		<div class="f-header-box clearfix">
+			<nav class="header-nav">
+				<a href="/index" class="header-nav-item">首 页</a>
+				<a href="/list" class="header-nav-item">课 程</a>
+				<a href="../user/home.html" class="header-nav-item">我的</a>
+				<a href="../opt/index.html"  style="width:100px;" target="_blank" class="header-nav-item">运营CMS</a>
+			</nav>
+
+			<nav class="header-nav" style="float:right">
+				<a href="/login" class="header-nav-item"  data-toggle="modal" style="margin-right:0px;font-size:14px;">登录</a>
+				<a href="/register" class="header-nav-item"   style="margin-left:0px;font-size:14px;">注册</a>
+			</nav>
+		</div>
+	</div>
+
+		<div class="f-main">
+			<div class="types-block clearfix" style="text-align: center;">
+				<h3 class="types-title">注册</h3>
+				<div id="registerForm"class="oc-form"  style="text-align: center;border: 1px solid #CCC;width: 600px;margin:0 auto;padding:20px;" >
+						<li><label>用户名</label> 
+							<input maxlength="20" id="userLoginName" type="text"  class="input-text"  placeholder="请输入用户名（英文数字）" >
+						</li>
+						<li><label>密码</label> 
+							<input maxlength="20" id="userPassword"  type="password" class="input-text" placeholder="请输入密码" autocomplete="off" />
+						</li>
+					<li><label>验证码</label>
+						<input id="verifyCodeActual" maxlength="6" class="input-text" type="text" style="width: 150px;" placeholder="请输入验证码"/>
+						<a class="vali-base"><img  onclick="changeVerifyCode(this);" id="captcha_img"  src="/kaptcha" style="width:100px;height:40px;float:left;margin-left:10px;"/></a>
+					</li>
+						<li id="errorMsg" class="clearfix" style="display: none;color:red;">用户名密码不能为空</li>
+						<li class="clearfix" style="margin-top: 30px;">
+							<input type="button" value="注册" class="btn" id="submit">
+						</li>
+						<li>
+							<a style="float: left;" href="/login">已有账号，去登录</a>
+						</li>
+					</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -43,5 +44,22 @@ public class OcprojectApplicationTests {
         userTest.setUserPassword("admin");
         User user=userDao.getByUsernameAndPassword(userTest);
         System.out.println(user.toString());
+    }
+
+    @Test
+    public  void testQueryUserByName(){
+        User user=userDao.queryUserByName("test1");
+        System.out.println(user.toString());
+    }
+
+    @Test
+    public  void testAddUser(){
+        User user=new User();
+        user.setUserLoginName("demo1");
+        user.setUserPassword("demo1");
+        user.setUserCreateTime(new Date());
+        user.setUserUpdateTime(new Date());
+        int k=userDao.addUser(user);
+        System.out.println("k为:"+k);
     }
 }

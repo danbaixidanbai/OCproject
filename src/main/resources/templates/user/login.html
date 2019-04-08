@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<title>网校在线学习平台</title>
+		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<link href="/css/reset.css" rel="stylesheet" type="text/css"/>
+		<script type='text/javascript'
+				src='/js/common/jquery.js' charset='utf-8'></script>
+		<script type='text/javascript'
+				src='/js/user/login.js' charset='utf-8'></script>
+		<script type='text/javascript'
+				src='/js/common/common.js' charset='utf-8'></script>
+	</head>
+
+	<body>
+	<!-- 头部-start -->
+	<div class="f-header">
+		<div class="f-header-box clearfix">
+			<nav class="header-nav">
+				<a href="/index" class="header-nav-item">首 页</a>
+				<a href="/list" class="header-nav-item">课 程</a>
+				<a href="/user/home" class="header-nav-item">我的</a>
+				<a href="/opt/index"  style="width:100px;" target="_blank" class="header-nav-item">运营CMS</a>
+			</nav>
+
+			<nav class="header-nav" style="float:right">
+				<a href="/login" class="header-nav-item"  data-toggle="modal"   style="margin-right:0px;font-size:14px;">登录</a>
+				<a href="/register" class="header-nav-item"   style="margin-left:0px;font-size:14px;">注册</a>
+			</nav>
+		</div>
+	</div>
+		<div class="f-main">
+			<div class="types-block clearfix" style="text-align: center;">
+				<h3 class="types-title">登录</h3>
+				<div  class="oc-form" id="infoForm" style="text-align: center;border: 1px solid #CCC;width: 600px;margin:0 auto;padding:20px;">
+						<li><label>用户名</label> 
+							<input id="userLoginName"   type="text"  class="input-text"  placeholder="请输入用户名" >
+						</li>
+						<li><label>密码</label> 
+							<input id="userPassword"  type="password" class="input-text" placeholder="请输入密码" autocomplete="off" />
+						</li>
+						<li><label>验证码</label> 
+						<input id="verifyCodeActual" maxlength="6" class="input-text" type="text" style="width: 150px;" placeholder="请输入验证码"/>
+						<a class="vali-base"><img  onclick="changeVerifyCode(this);" id="captcha_img"  src="/kaptcha" style="width:100px;height:40px;float:left;margin-left:10px;"/></a>
+						</li>
+						<li>
+							<label style="background-color:#FFF;"></label> 
+                           	<input type="checkbox" value="1" id="checkbox1" name="rememberMe" style="float: left;">
+                           	<span class="text"  style="float: left;margin-left:2px;">下次自动登录</span>
+                      	</li>
+					    <li id="errorMsg" class="clearfix" style="display: none;color:red;"></li>
+						<li class="clearfix" style="margin-top: 20px;">
+							<input type="button" id="submit" value="登录" class="btn"style="margin-right:20px;">
+							<div class="btn" onclick="window.location.href='/register'">注册</div>
+						</li>
+					</div>
+			</div>
+		</div>
+	</body>
+	
+</html>

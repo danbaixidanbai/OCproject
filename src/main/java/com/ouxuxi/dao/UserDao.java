@@ -6,5 +6,6 @@ import org.apache.ibatis.annotations.Param;
 public interface UserDao {
     User queryUserById(long userId);
     User getByUsernameAndPassword(@Param("user") User User);
-    int  addUser(User user);
+    int  addUser(@Param("user")User user);
+    User queryUserByName(String userLoginName);
 }

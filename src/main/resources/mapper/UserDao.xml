@@ -8,17 +8,61 @@
         SELECT id,username,password
         FROM users
     </select>-->
+    <sql id="All_Columns">
+        user_id,user_login_name,user_name,user_password,user_image,user_type,user_gender,user_birthday,user_sign
+        ,user_mobile,user_create_time,user_update_time
+    </sql>
+
     <select id="queryUserById" resultType="com.ouxuxi.entity.User">
-        SELECT user_id,user_login_name,user_name,user_password,user_image,user_type,user_gender,user_birthday,user_sign
-              ,user_mobile,user_create_time,user_update_time
+        SELECT
+         <include refid="All_Columns" />
         FROM tb_user
         WHERE user_id=#{userId};
     </select>
 
     <select id="getByUsernameAndPassword" resultType="com.ouxuxi.entity.User">
-        SELECT user_id,user_login_name,user_name,user_password,user_image,user_type,user_gender,user_birthday,user_sign
-              ,user_mobile,user_create_time,user_update_time
+        SELECT
+        <include refid="All_Columns" />
         FROM tb_user
         WHERE user_login_name=#{user.userLoginName} AND user_password=#{user.userPassword};
     </select>
+
+    <select id="queryUserByName" parameterType="string" resultType="com.ouxuxi.entity.User">
+        select
+        <include refid="All_Columns" />
+        from tb_user
+        where user_login_name=#{userLoginName}
+    </select>
+
+    <insert id="addUser" parameterType="com.ouxuxi.entity.User" useGeneratedKeys="true" keyProperty="userId"  keyColumn="user_id">
+        insert into tb_user
+        <trim prefix="(" suffix=")"  suffixOverrides="," >
+            <if test="user.userLoginName!=null">user_login_name,</if>
+            <if test="user.userName!=null">user_name,</if>
+            <if test="user.userPassword!=null">user_password,</if>
+            <if test="user.userImage!=null">user_image,</if>
+            <if test="user.userGender!=null">user_gender,</if>
+            <if test="user.userBirthday!=null">user_birthday,</if>
+            <if test="user.userSign!=null">user_sign,</if>
+            <if test="user.userMobile!=null">user_mobile,</if>
+            <if test="user.userCreateTime!=null">user_create_time,</if>
+            <if test="user.userUpdateTime!=null">user_update_time,</if>
+            <if test="user.del!=null">del,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")"  suffixOverrides="," >
+            <if test="user.userLoginName!=null">#{user.userLoginName},</if>
+            <if test="user.userName!=null">#{user.userName},</if>
+            <if test="user.userPassword!=null">#{user.userPassword},</if>
+            <if test="user.userImage!=null">#{userImage},</if>
+            <if test="user.userGender!=null">#{user.userGender},</if>
+            <if test="user.userBirthday!=null">#{user.userBirthday},</if>
+            <if test="user.userSign!=null">#{user.userSign},</if>
+            <if test="user.userMobile!=null">#{user.userMobile},</if>
+            <if test="user.userCreateTime!=null">#{user.userCreateTime},</if>
+            <if test="user.userUpdateTime!=null">#{user.userUpdateTime},</if>
+            <if test="user.del!=null">#{user.del},</if>
+        </trim>
+    </insert>
+
 </mapper>

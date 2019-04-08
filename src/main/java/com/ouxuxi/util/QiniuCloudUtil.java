@@ -82,10 +82,11 @@ public class QiniuCloudUtil {
         return imgUrl.toString();
     }
 
-    public void contextLoads() throws QiniuException {
+    public void deleteImage(String key) throws QiniuException {
         Auth auth=Auth.create(ACCESS_KEY,SECRET_KEY);
         Configuration cfg = new Configuration(Zone.zone2());
         BucketManager bucketManager=new BucketManager(auth,cfg);
-        bucketManager.delete("ocproject","417d1361-bf59-4328-9496-4fa28ec91f58");
+        //"417d1361-bf59-4328-9496-4fa28ec91f58"
+        bucketManager.delete("ocproject",key);
     }
 }

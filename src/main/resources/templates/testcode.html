@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>testcode</title>
+
+    <script type="text/javascript">
+        function refresh() {
+            document.getElementById('captcha_img').src="/kaptcha?"+Math.random();
+        }
+    </script>
+</head>
+<body>
+<form action="/testverifycode" method="post">
+    验证码:  <input type="text" placeholder="请输入验证码" name="verifyCodeActual">
+    <div class="item-input">
+        <img id="captcha_img" alt="点击更换" title="点击更换"
+             onclick="refresh()" src="/kaptcha" />
+    </div>
+    <input type="submit" value="提交" />
+</form>
+</body>
+</html>

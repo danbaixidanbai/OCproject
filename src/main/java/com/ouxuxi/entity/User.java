@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
@@ -14,11 +16,12 @@ public class User {
     private String userName;
     private String userImage;
     private int userType;
-    private int gender;
+    private int userGender;
     private String userBirthday;
     private String userSign;
     private String userMobile;
-    private String userCreateTime;
-    private String userUpdateTime;
+    private Date userCreateTime;
+    private Date userUpdateTime;
+    private int del;
 
 }
