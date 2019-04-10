@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 //负责html路由的controller
 @Controller
-public class IndexController {
+public class HtmlController {
 
     @RequestMapping(value = "/index")
     public String test(){
@@ -25,5 +25,9 @@ public class IndexController {
     @RequestMapping(value = "/login")
     public String login(){
         return "user/login";
+    }
+    @RequestMapping(value = "/info")
+    public String info(){
+        return "user/info";
     }
 }

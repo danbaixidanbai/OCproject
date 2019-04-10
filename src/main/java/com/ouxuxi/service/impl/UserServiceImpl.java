@@ -34,4 +34,19 @@ public class UserServiceImpl implements UserService {
     public User getUserByName(String userLoginName) {
         return userDao.queryUserByName(userLoginName);
     }
+
+    @Override
+    public int updateUser(User user)throws Exception {
+        return userDao.updateUser(user);
+    }
+
+    @Override
+    public int updateUserByAdmin(User user)throws Exception {
+        return userDao.updateUserByAdmin(user);
+    }
+
+    @Override
+    public int updateUserByTea(User user)throws Exception {
+        return userDao.updateUserByTea(user);
+    }
 }

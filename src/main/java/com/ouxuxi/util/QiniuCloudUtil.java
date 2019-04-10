@@ -1,6 +1,7 @@
 package com.ouxuxi.util;
 
 import com.google.gson.Gson;
+import com.ouxuxi.entity.User;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
@@ -51,16 +52,14 @@ public class QiniuCloudUtil {
         return imgUrl+key;
     }*/
     //上传图片
-    public String upLoadImage(byte[] data)   {
-        //图片的外链地址域名
-        StringBuffer imgUrl=new StringBuffer("http://pp9sub7xv.bkt.clouddn.com/");
+    public static String upLoadImage(byte[] data)   {
 
+        String urlKey="";
         //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(Zone.zone2());
         UploadManager uploadManager = new UploadManager(cfg);
         String key= UUID.randomUUID().toString();
         System.out.println(key);
-        //Auth auth1 = Auth.create(ACCESS_KEY, SECRET_KEY);
         String upToken = auth.uploadToken(bucket);
         System.out.println(upToken);
         try{
@@ -68,7 +67,8 @@ public class QiniuCloudUtil {
             System.out.println(response);
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(),DefaultPutRet.class);
             System.out.println(putRet.key);
-            imgUrl.append(putRet.key);
+            urlKey=putRet.key;
+            //imgUrl.append(putRet.key);
         }catch (QiniuException e){
             e.printStackTrace();
             Response r = e.response;
@@ -78,15 +78,23 @@ public class QiniuCloudUtil {
             }catch (QiniuException ex2) {
               }
         }
-        System.out.println("imgUrl"+imgUrl);
-        return imgUrl.toString();
+        return urlKey;
     }
 
-    public void deleteImage(String key) throws QiniuException {
+    public static void deleteImage(String key) throws QiniuException {
         Auth auth=Auth.create(ACCESS_KEY,SECRET_KEY);
         Configuration cfg = new Configuration(Zone.zone2());
         BucketManager bucketManager=new BucketManager(auth,cfg);
         //"417d1361-bf59-4328-9496-4fa28ec91f58"
         bucketManager.delete("ocproject",key);
+    }
+
+    public static void getImage(User user){
+        //图片的外链地址域名
+        StringBuffer imgUrl=new StringBuffer("http://pp9sub7xv.bkt.clouddn.com/");
+        if(user.getUserImage()!=null && !user.getUserImage().equals("")){
+            imgUrl.append(user.getUserImage());
+            user.setUserImage(imgUrl.toString());
+        }
     }
 }

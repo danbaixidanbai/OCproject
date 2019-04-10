@@ -8,4 +8,7 @@ public interface UserDao {
     User getByUsernameAndPassword(@Param("user") User User);
     int  addUser(@Param("user")User user);
     User queryUserByName(String userLoginName);
+    int  updateUser(@Param("user")User user);
+    int  updateUserByAdmin(@Param("user")User user);
+    int  updateUserByTea(@Param("user")User user);
 }

@@ -9,6 +9,11 @@ function getQueryString(name) {
     }
     return '';
 }
+//截取字符串
+function cutString(key){
+    var img=key.split("http://pp9sub7xv.bkt.clouddn.com/")[1];
+    return img;
+}
 
 Date.prototype.Format = function(fmt) {
     var o = {

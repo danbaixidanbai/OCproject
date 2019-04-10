@@ -55,11 +55,27 @@ public class OcprojectApplicationTests {
     @Test
     public  void testAddUser(){
         User user=new User();
-        user.setUserLoginName("demo1");
-        user.setUserPassword("demo1");
+        user.setUserLoginName("demo3");
+        user.setUserPassword("demo3");
         user.setUserCreateTime(new Date());
         user.setUserUpdateTime(new Date());
         int k=userDao.addUser(user);
+        System.out.println("k为:"+k);
+    }
+
+    @Test
+    public void testUpdateUser(){
+        User user=userDao.queryUserByName("demo3");
+        user.setUserPassword("123456");
+        int k=userDao.updateUser(user);
+        System.out.println("k为:"+k);
+    }
+    @Test
+    public void testUpdateUserBy(){
+        User user=new User();
+        user.setUserId(5);
+        int k=userDao.updateUserByTea(user);
+        k+=userDao.updateUserByAdmin(user);
         System.out.println("k为:"+k);
     }
 }

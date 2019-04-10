@@ -54,7 +54,7 @@
             <if test="user.userLoginName!=null">#{user.userLoginName},</if>
             <if test="user.userName!=null">#{user.userName},</if>
             <if test="user.userPassword!=null">#{user.userPassword},</if>
-            <if test="user.userImage!=null">#{userImage},</if>
+            <if test="user.userImage!=null">#{user.userImage},</if>
             <if test="user.userGender!=null">#{user.userGender},</if>
             <if test="user.userBirthday!=null">#{user.userBirthday},</if>
             <if test="user.userSign!=null">#{user.userSign},</if>
@@ -65,4 +65,37 @@
         </trim>
     </insert>
 
+    <update id="updateUser" parameterType="com.ouxuxi.entity.User" useGeneratedKeys="true" keyProperty="userId"  keyColumn="user_id">
+        UPDATE  tb_user
+        <set>
+            <if test="user.userLoginName!=null">user_login_name=#{user.userLoginName},</if>
+            <if test="user.userName!=null">user_name=#{user.userName},</if>
+            <if test="user.userPassword!=null">user_password=#{user.userPassword},</if>
+            <if test="user.userImage!=null">user_image=#{user.userImage},</if>
+            <if test="user.userGender!=null">user_gender=#{user.userGender},</if>
+            <if test="user.userBirthday!=null">user_birthday=#{user.userBirthday},</if>
+            <if test="user.userSign!=null">user_sign=#{user.userSign},</if>
+            <if test="user.userMobile!=null">user_mobile=#{user.userMobile},</if>
+            <if test="user.userUpdateTime!=null">user_update_time=#{user.userUpdateTime},</if>
+        </set>
+        WHERE user_id=#{user.userId}
+    </update>
+
+    <update id="updateUserByAdmin" parameterType="com.ouxuxi.entity.User" useGeneratedKeys="true" keyProperty="userId"  keyColumn="user_id">
+        UPDATE  tb_user
+        <set>
+            <if test="user.userUpdateTime!=null">user_update_time=#{user.userUpdateTime},</if>
+            user_type=2,
+        </set>
+        WHERE user_id=#{user.userId}
+    </update>
+
+    <update id="updateUserByTea" parameterType="com.ouxuxi.entity.User" useGeneratedKeys="true" keyProperty="userId"  keyColumn="user_id">
+        UPDATE  tb_user
+        <set>
+            <if test="user.userUpdateTime!=null">user_update_time=#{user.userUpdateTime},</if>
+            user_type=0,
+        </set>
+        WHERE user_id=#{user.userId}
+    </update>
 </mapper>
