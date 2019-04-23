@@ -15,6 +15,6 @@ public class CourseClassify {
     private int classifyPriority;
     private Date classifyCreateTime;
     private Date classifyUpdateTime;
-    private CourseClassify parent;//父级别
+    private long parent;//父级别
     private int del;
 }

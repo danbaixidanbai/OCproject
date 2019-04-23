@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ouxuxi.dao.CourseClassifyDao">
+    <resultMap id="beansResultMap" type="com.ouxuxi.entity.CourseClassify">
+        <id column="course_classify_id" property="classifyId"/>
+        <result column="course_classify_name" property="classifyName"/>
+        <result column="parent" property="parent"/>
+        <result column="course_classify_priority" property="classifyPriority"/>
+        <result column="course_classify_create_time" property="classifyCreateTime"/>
+        <result column="course_classify_update_time" property="classifyUpdateTime"/>
+    </resultMap>
+    
+    <sql id="allColumns">
+        course_classify_id,course_classify_name,parent,course_classify_priority,course_classify_create_time,
+        course_classify_update_time
+    </sql>
+    
+    <select id="queryCourseClassifyById" resultMap="beansResultMap" parameterType="long">
+        SELECT
+        <include refid="allColumns"/>
+        FROM tb_course_classify
+        WHERE course_classify_id=#{classifyId}
+    </select>
+
+    <select id="queryCourseClassifyList" resultMap="beansResultMap">
+        SELECT
+        <include refid="allColumns"/>
+        FROM tb_course_classify
+        order by parent,course_classify_priority
+    </select>
+
+    <select id="queryCourseClassifyCount"  parameterType="com.ouxuxi.entity.CourseClassify" resultType="java.lang.Integer">
+        SELECT count(*) from tb_course_classify
+        <where>
+            <if test="condition!=null and condition.parent!=null">
+                and parent=#{condition.parent}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryCourseClassifyListByParent" resultMap="beansResultMap">
+        SELECT
+        <include refid="allColumns"/>
+        FROM tb_course_classify
+        WHERE parent=#{parent}
+    </select>
+
+
+
+    <select id="queryCourseClassify" resultMap="beansResultMap" >
+        SELECT
+        <include refid="allColumns"/>
+        FROM tb_course_classify
+        <where>
+              parent !=0;
+        </where>
+    </select>
+    <insert id="addCourseClassify" parameterType="com.ouxuxi.entity.CourseClassify" useGeneratedKeys="true" keyProperty="classifyId" keyColumn="course_classify_id">
+        insert into tb_course_classify
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="condition.classifyName!=null">
+                course_classify_name,
+            </if>
+            <if test="condition.classifyPriority!=null">
+                course_classify_priority,
+            </if>
+            <if test="condition.parent!=null">
+                parent,
+            </if>
+            <if test="condition.classifyCreateTime!=null">
+                course_classify_create_time,
+            </if>
+            <if test="condition.classifyUpdateTime!=null">
+                course_classify_update_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="condition.classifyName!=null">
+                #{condition.classifyName},
+            </if>
+            <if test="condition.classifyPriority!=null">
+                #{condition.classifyPriority},
+            </if>
+            <if test="condition.parent!=null">
+                #{condition.parent},
+            </if>
+            <if test="condition.classifyCreateTime!=null">
+                #{condition.classifyCreateTime},
+            </if>
+            <if test="condition.classifyUpdateTime!=null">
+                #{condition.classifyUpdateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateCourseClassify" parameterType="com.ouxuxi.entity.CourseClassify" keyProperty="classifyId" keyColumn="course_classify_id">
+        UPDATE tb_course_classify
+        <set>
+            <if test="condition.classifyName!=null">
+                course_classify_name=#{condition.classifyName},
+            </if>
+            <if test="condition.classifyPriority!=null">
+                course_classify_priority=#{condition.classifyPriority},
+            </if>
+            <if test="condition.parent!=null">
+                parent=#{condition.parent},
+            </if>
+            <if test="condition.classifyCreateTime!=null">
+                course_classify_create_time=#{condition.classifyCreateTime},
+            </if>
+            <if test="condition.classifyUpdateTime!=null">
+                course_classify_update_time=#{condition.classifyUpdateTime}
+            </if>
+        </set>
+        where course_classify_id=#{condition.classifyId}
+    </update>
+
+    <delete id="deleteCourseClassify" parameterType="java.lang.Long">
+        DELETE FROM tb_course_classify
+        where course_classify_id=#{classifyId}
+    </delete>
+</mapper>

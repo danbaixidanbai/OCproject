@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ouxuxi.dao.CourseDao">
+    <sql id="allColumns">
+        course_id,course_name,course_image,course_classify_id,
+        course_classify_parent,tb_course.user_id,course_priority,course_count,
+        course_content,course_create_time,course_update_time,
+        course_time,tb_user.user_name
+    </sql>
+    <resultMap id="course" type="com.ouxuxi.entity.Course">
+        <id column="course_id" property="courseId"/>
+        <result column="course_name" property="courseName"/>
+        <result column="course_image" property="courseImage"/>
+        <result column="course_classify_id" property="courseClassify"/>
+        <result column="course_classify_parent" property="courseClassifyParent"/>
+        <result column="course_priority" property="coursePriority"/>
+        <result column="course_count" property="courseCount"/>
+        <result column="course_content" property="courseContent"/>
+        <result column="course_create_time" property="courseCreateTime"/>
+        <result column="course_update_time" property="courseUpdateTime"/>
+        <result column="course_time" property="courseTime"/>
+        <association column="user_id" property="user" javaType="com.ouxuxi.entity.User">
+            <id column="user_id" property="userId"/>
+            <result column="user_name" property="userName"/>
+        </association>
+    </resultMap>
+
+    <insert id="addCourse" useGeneratedKeys="true" parameterType="com.ouxuxi.entity.Course">
+        INSERT INTO tb_course
+        <trim prefix="(" suffix=")"  suffixOverrides=",">
+            <if test="course.courseName!=null">course_name,</if>
+            <if test="course.courseImage!=null">course_image,</if>
+            <if test="course.courseClassify!=null">course_classify_id,</if>
+            <if test="course.courseClassifyParent!=null">course_classify_parent,</if>
+            <if test="course.user!=null and course.user.userId!=null">user_id,</if>
+            <if test="course.courseCount!=null">course_count,</if>
+            <if test="course.coursePriority!=null">course_priority,</if>
+            <if test="course.courseContent!=null">course_content,</if>
+            <if test="course.courseCreateTime!=null">course_create_time,</if>
+            <if test="course.courseUpdateTime!=null">course_update_time,</if>
+            <if test="course.courseTime!=null">course_time,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="course.courseName!=null">#{course.courseName},</if>
+            <if test="course.courseImage!=null">#{course.courseImage},</if>
+            <if test="course.courseClassify!=null">#{course.courseClassify},</if>
+            <if test="course.courseClassifyParent!=null">#{course.courseClassifyParent},</if>
+            <if test="course.user!=null and course.user.userId!=null">#{course.user.userId},</if>
+            <if test="course.courseCount!=null">#{course.courseCount},</if>
+            <if test="course.coursePriority!=null">#{course.coursePriority},</if>
+            <if test="course.courseContent!=null">#{course.courseContent},</if>
+            <if test="course.courseCreateTime!=null">#{course.courseCreateTime},</if>
+            <if test="course.courseUpdateTime!=null">#{course.courseUpdateTime},</if>
+            <if test="course.courseTime!=null">#{course.courseTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateCourse" parameterType="com.ouxuxi.entity.Course" useGeneratedKeys="true">
+        UPDATE tb_course
+        <set>
+            <if test="course.courseName!=null">course_name=#{course.courseName},</if>
+            <if test="course.courseImage!=null">course_image=#{course.courseImage},</if>
+            <if test="course.courseClassify!=null">course_classify_id=#{course.courseClassify},</if>
+            <if test="course.courseClassifyParent!=null">course_classify_parent=#{course.courseClassifyParent},</if>
+            <if test="course.user!=null and course.user.userId!=null">user_id=#{course.user.userId},</if>
+            <if test="course.courseCount!=null">course_count=#{course.courseCount},</if>
+            <if test="course.coursePriority!=null">course_priority=#{course.coursePriority},</if>
+            <if test="course.courseContent!=null">course_content=#{course.courseContent},</if>
+            <if test="course.courseCreateTime!=null">course_create_time=#{course.courseCreateTime},</if>
+            <if test="course.courseUpdateTime!=null">course_update_time=#{course.courseUpdateTime},</if>
+            <if test="course.courseTime!=null">course_time=#{course.courseTime},</if>
+        </set>
+        WHERE course_id=#{course.courseId}
+    </update>
+
+    <delete id="deleteCourse" parameterType="java.lang.Long">
+        DELETE FROM tb_course
+        where course_id=#{courseId}
+    </delete>
+
+    <select id="queryCourseById" resultMap="course" parameterType="java.lang.Long">
+        SELECT
+        <include refid="allColumns"/>
+        FROM tb_course,tb_user
+        WHERE course_id=#{courseId}
+        and tb_course.user_id=tb_user.user_id
+    </select>
+
+    <select id="queryCourseList" resultMap="course" parameterType="com.ouxuxi.entity.Course">
+        SELECT
+        <include refid="allColumns"/>
+        FROM tb_course,tb_user
+        <where>
+            <if test="course.courseName!=null">and course_name like %${course.courseName}%</if>
+            <if test="course.courseClassify!=null">and course_classify_id=#{course.courseClassify}</if>
+            <if test="course.courseClassifyParent!=null">and course_classify_parent=#{course.courseClassifyParent}</if>
+            <if test="course.user!=null and course.user.userId!=null">and user_id=#{course.user.userId}</if>
+            and tb_course.user_id=tb_user.user_id
+        </where>
+        limit #{pageIndex},#{pageSize}
+        order by course_count
+    </select>
+
+    <select id="queryCourseCount" resultType="java.lang.Integer" parameterType="com.ouxuxi.entity.Course">
+        SELECT
+        count(*)
+        FROM tb_course
+        <where>
+            <if test="course.courseName!=null">and course_name like %${course.courseName}%</if>
+            <if test="course.courseClassify!=null">and course_classify_id=#{course.courseClassify}</if>
+            <if test="course.courseClassifyParent!=null">and course_classify_parent=#{course.courseClassifyParent}</if>
+            <if test="course.user!=null and course.user.userId!=null">and user_id=#{course.user.userId}</if>
+        </where>
+    </select>
+
+</mapper>

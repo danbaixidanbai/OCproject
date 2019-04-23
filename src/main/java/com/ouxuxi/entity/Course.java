@@ -13,12 +13,13 @@ public class Course {
     private long courseId;
     private String courseName;
     private String courseImage;
-    private CourseClassify courseClassify;
-    private CourseClassify courseClassifyParent;
+    private long courseClassify;
+    private long courseClassifyParent;
     private User user;
     private int courseCount;
     private int coursePriority;
     private String courseContent;
+    private String courseTime;//时长
     private Date courseCreateTime;
     private Date courseUpdateTime;
     private int del;

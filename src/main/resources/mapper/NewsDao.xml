@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ouxuxi.dao.NewsDao">
+    <sql id="news">
+        news_id,news_name,news_image,news_url,news_priority,news_enable,news_create_time,news_update_time,del
+    </sql>
+    <select id="queryNewsById" resultType="com.ouxuxi.entity.News">
+        SELECT
+        <include refid="news"/>
+        FROM tb_news
+        where news_id=#{newsId}
+    </select>
+
+    <select id="queryNewsList" resultType="com.ouxuxi.entity.News">
+        SELECT
+        <include refid="news"/>
+        FROM tb_news
+        where news_enable=1
+        order by news_priority,news_create_time DESC
+        LIMIT #{pageIndex},#{pageSize}
+    </select>
+
+    <select id="newsCount" resultType="java.lang.Integer">
+        SELECT
+        count(*) from tb_news where news_enable=1
+    </select>
+
+    <select id="queryNewsListAll" resultType="com.ouxuxi.entity.News">
+        SELECT
+        <include refid="news"/>
+        FROM tb_news
+        order by news_priority,news_create_time DESC
+        LIMIT #{pageIndex},#{pageSize}
+    </select>
+
+    <select id="newsCountAll" resultType="java.lang.Integer">
+        SELECT
+        count(*) from tb_news
+    </select>
+
+    <insert id="addNews" useGeneratedKeys="true" keyColumn="news_id" keyProperty="newsId">
+        insert into tb_news
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="news.newsName!=null">news_name,</if>
+            <if test="news.newsImage!=null">news_image,</if>
+            <if test="news.newsUrl!=null">news_url,</if>
+            <if test="news.newsPriority!=null">news_priority,</if>
+            <if test="news.newsEnable!=null">news_enable,</if>
+            <if test="news.newsCreateTime!=null">news_create_time,</if>
+            <if test="news.newsUpdateTime!=null">news_update_time</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="news.newsName!=null">#{news.newsName},</if>
+            <if test="news.newsImage!=null">#{news.newsImage},</if>
+            <if test="news.newsUrl!=null">#{news.newsUrl},</if>
+            <if test="news.newsPriority!=null">#{news.newsPriority},</if>
+            <if test="news.newsEnable!=null">#{news.newsEnable},</if>
+            <if test="news.newsCreateTime!=null">#{news.newsCreateTime},</if>
+            <if test="news.newsUpdateTime!=null">#{news.newsUpdateTime}</if>
+        </trim>
+    </insert>
+
+    <update id="updateNews" keyColumn="news_id" keyProperty="newsId">
+        update tb_news
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="news.newsName!=null">
+                news_name=#{news.newsName},
+            </if>
+            <if test="news.newsImage!=null">
+                news_image=#{news.newsImage},
+            </if>
+            <if test="news.newsUrl!=null">
+                news_url=#{news.newsUrl},
+            </if>
+            <if test="news.newsPriority!=null">
+                news_priority=#{news.newsPriority},
+            </if>
+            <if test="news.newsEnable!=null">
+                news_enable=#{news.newsEnable},
+            </if>
+            <if test="news.newsCreateTime!=null">
+                news_create_time=#{news.newsCreateTime},
+            </if>
+            <if test="news.newsUpdateTime!=null">
+                news_update_time=#{news.newsUpdateTime},
+            </if>
+        </trim>
+        where news_id=#{news.newsId}
+    </update>
+
+    <delete id="deleteNews" >
+        DELETE FROM tb_news
+        WHERE news_id=#{newsId}
+    </delete>
+</mapper>

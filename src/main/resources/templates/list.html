@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<title>在线网校学习平台</title>
+
+		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<link href="/css/reset.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" src="/js/common/jquery.js"></script>
+		<script type="text/javascript" src="/js/common/common.js" charset='utf-8'></script>
+		<script type="text/javascript" src="/js/common/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/list.js"></script>
+		<script type='text/javascript' src='/js/headtest.js' charset='utf-8'></script>
+
+		<!--[if lt IE 9]>
+		<script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+	</head>
+
+	<body>
+
+
+		<div class="f-main clearfix">
+			<!-- 一级分类-start -->
+			<div class="course-nav-row clearfix">
+				<span class="hd">方向：</span>
+				<ul class="course-nav" id="first">
+					<!--<li class="course-nav-item ">
+						<a href="/course/list">全部</a>
+					</li>
+					<li class="course-nav-item cur-course-nav">
+						<a href="/course/list?c=fe">前端开发</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=be">后端开发</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=mobile" >移动开发</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=data" >数据库</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=cb" >云计算&amp;大数据</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=op" >运维&amp;测试</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >UI设计</a>
+					</li>-->
+				</ul>
+			</div>
+			<!-- 一级分类-end -->
+			
+			<!-- 二级分类-start -->
+			<div class="course-nav-row clearfix">
+				<span class="hd">分类：</span>
+				<ul class="course-nav" id="second">
+					<!--<li class="course-nav-item cur-course-nav">
+						<a href="/course/list">全部</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=fe">Java</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=be">HTML/CSS</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=mobile" >JavaScript</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=data" >Jquery</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=cb" >CSS</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=op" >Python</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >Django</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >Android</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >IOS</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >WebApp</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >MySql</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >MongoDB</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >Oracle</a>
+					</li>
+					<li class="course-nav-item">
+						<a href="/course/list?c=photo"  >大数据</a>
+					</li>-->
+				</ul>
+			</div>
+			<!-- 二级分类-end -->
+			
+			<!-- 课程列表-start -->
+			<div class="types-block clearfix" style="padding:0px;">
+				<h3 style="margin-bottom: 20px;">	
+					<span class="types-title" style="margin-right:40px;">课程列表</span>
+					<a href="javascript:void(0)" style="display: inline-block;margin-right:20px;" onclick="_queryPage(1,undefined,'last')">
+					<span >最新</span>
+					</a>
+					<a href="javascript:void(0)" style="display: inline-block;" onclick="_queryPage(1,undefined,'pop')">
+					<span >最热</span>
+					</a>
+				</h3>
+				<div class="types-content clearfix" style="margin-bottom: 20px;">
+				
+					<a href="">
+					<div class="course-card-container">
+						<div class="course-card-top green-bg">
+							<span>测试</span>
+						</div>
+
+						<div class="course-card-content">
+							<h3 class="course-card-name">Android自动化测试实战 工具 框架 脚本</h3>
+							<p title="找Android自动化测试工作必学的主流工具、框架和自动化脚本">找Android自动化测试工作必学的主流工具、框架和自动化脚本</p>
+							<div class="course-card-bottom">
+								<div class="course-card-info">初级<span>·</span>178人在学</div>
+							</div>
+						</div>
+					</div>
+					</a>
+
+					<a href="">
+					<div class="course-card-container">
+						<div class="course-card-top pink-bg">
+							<span>WebApp</span>
+						</div>
+						<div class="course-card-content">
+							<h3 class="course-card-name">AngularJS仿拉勾网WebApp 开发移动端单页应用</h3>
+							<p title="基于AngularJS，仿拉勾网开发一个招聘类的移动端单页应用">基于AngularJS，仿拉勾网开发一个招聘类的移动端单页应用</p>
+							<div class="clearfix course-card-bottom">
+								<div class="course-card-info">初级<span>·</span>3444人在学</div>
+							</div>
+						</div>
+					</div>
+					</a>
+					
+					<div class="course-card-container">
+						<div class="course-card-top brown-bg">
+							<span>Django</span>
+						</div>
+	
+						<div class="course-card-content">
+							<h3 class="course-card-name">强力django杀手级xadmin 打造上线标准的在线教育平台</h3>
+							<p title="全面掌握django框架,轻松应对python web开发工作">全面掌握django框架,轻松应对python web开发工作</p>
+							<div class="clearfix course-card-bottom">
+								<div class="course-card-info">初级<span>·</span>4888人在学</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="course-card-container">
+						<div class="course-card-top purple-bg">
+							<span>Python</span>
+						</div>
+	
+						<div class="course-card-content">
+							<h3 class="course-card-name">Python高级编程技巧实战</h3>
+							<p title="精选50个python训练任务，提升实战技能与高效编程技巧">精选50个python训练任务，提升实战技能与高效编程技巧</p>
+							<div class="clearfix course-card-bottom">
+								<div class="course-card-info">高级<span>·</span>81333人在学</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="course-card-container" style="margin-right: 0px;">
+						<div class="course-card-top green-bg">
+							<span>PHP</span>
+						</div>
+						
+						<div class="course-card-content">
+							<h3 class="course-card-name">前端后台ThinkPHP开发整站</h3>
+							<p title="用PHP+MySQL+Ajax开完新闻资讯整站，实现“小全栈”的梦想">用PHP+MySQL+Ajax开完新闻资讯整站，实现“小全栈”的梦想</p>
+							<div class="clearfix course-card-bottom">
+								<div class="course-card-info">中级<span>·</span>6133人在学</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+				
+				<div class="types-content clearfix">
+				
+					<a href="">
+					<div class="course-card-container">
+						<div class="course-card-top green-bg">
+							<span>测试</span>
+						</div>
+
+						<div class="course-card-content">
+							<h3 class="course-card-name">Android自动化测试实战 工具 框架 脚本</h3>
+							<p title="找Android自动化测试工作必学的主流工具、框架和自动化脚本">找Android自动化测试工作必学的主流工具、框架和自动化脚本</p>
+							<div class="course-card-bottom">
+								<div class="course-card-info">初级<span>·</span>178人在学</div>
+							</div>
+						</div>
+					</div>
+					</a>
+
+					<a href="">
+					<div class="course-card-container">
+						<div class="course-card-top pink-bg">
+							<span>WebApp</span>
+						</div>
+						<div class="course-card-content">
+							<h3 class="course-card-name">AngularJS仿拉勾网WebApp 开发移动端单页应用</h3>
+							<p title="基于AngularJS，仿拉勾网开发一个招聘类的移动端单页应用">基于AngularJS，仿拉勾网开发一个招聘类的移动端单页应用</p>
+							<div class="clearfix course-card-bottom">
+								<div class="course-card-info">初级<span>·</span>3444人在学</div>
+							</div>
+						</div>
+					</div>
+					</a>
+					
+					<div class="course-card-container">
+						<div class="course-card-top brown-bg">
+							<span>Django</span>
+						</div>
+	
+						<div class="course-card-content">
+							<h3 class="course-card-name">强力django杀手级xadmin 打造上线标准的在线教育平台</h3>
+							<p title="全面掌握django框架,轻松应对python web开发工作">全面掌握django框架,轻松应对python web开发工作</p>
+							<div class="clearfix course-card-bottom">
+								<div class="course-card-info">初级<span>·</span>4888人在学</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="course-card-container">
+						<div class="course-card-top purple-bg">
+							<span>Python</span>
+						</div>
+	
+						<div class="course-card-content">
+							<h3 class="course-card-name">Python高级编程技巧实战</h3>
+							<p title="精选50个python训练任务，提升实战技能与高效编程技巧">精选50个python训练任务，提升实战技能与高效编程技巧</p>
+							<div class="clearfix course-card-bottom">
+								<div class="course-card-info">高级<span>·</span>81333人在学</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="course-card-container" style="margin-right: 0px;">
+						<div class="course-card-top green-bg">
+							<span>PHP</span>
+						</div>
+						
+						<div class="course-card-content">
+							<h3 class="course-card-name">前端后台ThinkPHP开发整站</h3>
+							<p title="用PHP+MySQL+Ajax开完新闻资讯整站，实现“小全栈”的梦想">用PHP+MySQL+Ajax开完新闻资讯整站，实现“小全栈”的梦想</p>
+							<div class="clearfix course-card-bottom">
+								<div class="course-card-info">中级<span>·</span>6133人在学</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			<!-- 课程列表-end -->
+			
+			<!-- 分页-start -->
+			<div class="page-box clearfix">
+				<div class="page clearfix">
+					<div style="float:left;">
+						<a class="page-next" href="javascript:void(0);" onclick="_queryPage('1')">首 页</a>
+						<a class="page-next" href="javascript:void(0);" onclick="_queryPage('${page.pageNum-1}')">上一页</a>
+						<a class="page-cur" href="javascript:void(0);" >1</a>
+						<a class="page-num" href="javascript:void(0);" onclick="_queryPage('${n}');">2</a>
+						<a class="page-num" href="javascript:void(0);" >3</a>
+						<a class="page-num" href="javascript:void(0);" >4</a>
+						<a class="page-num" href="javascript:void(0);" >5</a>
+						<a class="page-num" href="javascript:void(0);" >6</a>
+						<a class="page-num" href="javascript:void(0);" >7</a>
+						<span class="page-omit">...</span>
+						<a class="page-next" href="javascript:void(0);"  onclick="_queryPage('${page.pageNum+1}')">下一页</a> 
+						<a class="page-next" href="javascript:void(0);"  onclick="_queryPage('${page.pageTotalCount!}')">尾 页</a> 
+					</div>
+				</div>
+			</div>
+			<!-- 分页-end -->	
+		</div>
+
+	</body>
+	
+</html>

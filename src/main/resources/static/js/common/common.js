@@ -14,6 +14,10 @@ function cutString(key){
     var img=key.split("http://pp9sub7xv.bkt.clouddn.com/")[1];
     return img;
 }
+function appendString(key){
+    var img='http://pp9sub7xv.bkt.clouddn.com/'+key;
+    return img;
+}
 
 Date.prototype.Format = function(fmt) {
     var o = {

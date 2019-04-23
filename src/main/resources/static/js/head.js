@@ -24,7 +24,7 @@ $(function(){
                         img='http://pp9sub7xv.bkt.clouddn.com/'+user.userImage;
                     }
                     html += '<a href="/home" class="header-nav-item"  style="margin-left:0px;width:40px;height:40px;" id="userdetail">'
-                        + '<img id="headerUser" alt="" src="' + img + '"style="width: 70px;height:70px;border-radius:50%;">'
+                        + '<img id="headerUser" alt="" src="' + img + '"style="width: 35px;height:35px;border-radius:100%;">'
                         + '</a>';
                     $('#headerUserHeader').html(html);
                     //$('#headerUserHeader') .css("margin-top","-100px");
@@ -49,8 +49,7 @@ $(function(){
                     $("#userdetail").append(loginMsg);
                     show();
                 }else if(resp.errCode == 1) {
-                    alert("系统繁忙，请重新登录");
-                    window.location.href="/login";
+                    alert("你还没登陆，请重新登录");
                 }
 
 

@@ -9,8 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HtmlController {
 
     @RequestMapping(value = "/index")
-    public String test(){
+    public String index(){
         return "index";
+    }
+
+    @RequestMapping(value = "/list")
+    public String list(){
+        return "list";
     }
 
     @RequestMapping(value = "/testcode")
