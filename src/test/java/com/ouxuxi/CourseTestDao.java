@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -50,8 +51,10 @@ public class CourseTestDao {
         System.out.println("num:"+num);
     }
     @Test
-    public void queryCourseById(){
-        Course course=courseDao.queryCourseById(1);
+    public void queryCourseByCondition(){
+        Course course=new Course();
         System.out.println(course.toString());
+        List<Course> list=courseDao.queryCourseList(course,0,10);
+        System.out.println("size:"+list.size());
     }
 }

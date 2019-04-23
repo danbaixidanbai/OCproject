@@ -67,6 +67,35 @@ public class CourseClassifyController {
     //首页classifyId不为空
     @GetMapping(value = "/getbyclassifyid")
     private Map<String,Object> getByClassifyId(HttpServletRequest request){
-
+        Map<String,Object> map=new HashMap<String,Object>();
+        long classifyId=HttpServletRequestUtil.getLong(request,"classifyId");
+        if(classifyId>0){
+            CourseClassify courseClassify=courseClassifyService.getCourseClassufyById(classifyId);
+            List<CourseClassify> listParent=courseClassifyService.getCourseClassifyParent();
+            map.put("classifyParent",listParent);
+            if(courseClassify!=null){
+                long parentId=courseClassify.getParent();
+                List<CourseClassify> list=courseClassifyService.getCourseClassifyByParentId((int)parentId);
+                if(list!=null&&list.size()>0){
+                    map.put("classify",list);
+                    map.put("parentId",parentId);
+                    map.put("classifyId",classifyId);
+                }else{
+                    map.put("errCode",4);
+                    map.put("errMsg","获取二级分类失败");
+                    return map;
+                }
+            }else{
+                map.put("errCode",3);
+                map.put("errMsg","courseClassify加载失败！！！");
+                return map;
+            }
+        }else{
+            map.put("errCode",2);
+            map.put("errMsg","classifyId为空");
+            return map;
+        }
+        map.put("errCode",1);
+        return map;
     }
 }

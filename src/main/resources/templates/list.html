@@ -116,15 +116,9 @@
 			<div class="types-block clearfix" style="padding:0px;">
 				<h3 style="margin-bottom: 20px;">	
 					<span class="types-title" style="margin-right:40px;">课程列表</span>
-					<a href="javascript:void(0)" style="display: inline-block;margin-right:20px;" onclick="_queryPage(1,undefined,'last')">
-					<span >最新</span>
-					</a>
-					<a href="javascript:void(0)" style="display: inline-block;" onclick="_queryPage(1,undefined,'pop')">
-					<span >最热</span>
-					</a>
 				</h3>
-				<div class="types-content clearfix" style="margin-bottom: 20px;">
-				
+				<div class="types-content clearfix" style="margin-bottom: 20px;" id="course"></div>
+				<!--
 					<a href="">
 					<div class="course-card-container">
 						<div class="course-card-top green-bg">
@@ -276,7 +270,7 @@
 						</div>
 					</div>
 					
-				</div>
+				</div>-->
 				
 			</div>
 			<!-- 课程列表-end -->
@@ -284,19 +278,18 @@
 			<!-- 分页-start -->
 			<div class="page-box clearfix">
 				<div class="page clearfix">
-					<div style="float:left;">
-						<a class="page-next" href="javascript:void(0);" onclick="_queryPage('1')">首 页</a>
-						<a class="page-next" href="javascript:void(0);" onclick="_queryPage('${page.pageNum-1}')">上一页</a>
-						<a class="page-cur" href="javascript:void(0);" >1</a>
-						<a class="page-num" href="javascript:void(0);" onclick="_queryPage('${n}');">2</a>
+					<div style="float:left;" id="page">
+						<a class="page-next index" href="javascript:void(0);">首 页</a>
+						<a class="page-next index" href="javascript:void(0);" >上一页</a>
+						<a class="page-num page-cur" href="javascript:void(0);" >1</a>
+						<a class="page-num" href="javascript:void(0);" >2</a>
 						<a class="page-num" href="javascript:void(0);" >3</a>
 						<a class="page-num" href="javascript:void(0);" >4</a>
 						<a class="page-num" href="javascript:void(0);" >5</a>
 						<a class="page-num" href="javascript:void(0);" >6</a>
 						<a class="page-num" href="javascript:void(0);" >7</a>
-						<span class="page-omit">...</span>
-						<a class="page-next" href="javascript:void(0);"  onclick="_queryPage('${page.pageNum+1}')">下一页</a> 
-						<a class="page-next" href="javascript:void(0);"  onclick="_queryPage('${page.pageTotalCount!}')">尾 页</a> 
+						<a class="page-next last" href="javascript:void(0);">下一页</a>
+						<a class="page-next last" href="javascript:void(0);">尾 页</a>
 					</div>
 				</div>
 			</div>

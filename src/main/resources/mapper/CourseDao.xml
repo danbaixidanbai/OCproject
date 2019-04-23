@@ -96,13 +96,13 @@
         FROM tb_course,tb_user
         <where>
             <if test="course.courseName!=null">and course_name like %${course.courseName}%</if>
-            <if test="course.courseClassify!=null">and course_classify_id=#{course.courseClassify}</if>
-            <if test="course.courseClassifyParent!=null">and course_classify_parent=#{course.courseClassifyParent}</if>
+            <if test="course.courseClassify!=null and course.courseClassify gt 0">and course_classify_id=#{course.courseClassify}</if>
+            <if test="course.courseClassifyParent!=null and course.courseClassifyParent gt 0">and course_classify_parent=#{course.courseClassifyParent}</if>
             <if test="course.user!=null and course.user.userId!=null">and user_id=#{course.user.userId}</if>
             and tb_course.user_id=tb_user.user_id
         </where>
+        order by course_count desc
         limit #{pageIndex},#{pageSize}
-        order by course_count
     </select>
 
     <select id="queryCourseCount" resultType="java.lang.Integer" parameterType="com.ouxuxi.entity.Course">
@@ -111,8 +111,8 @@
         FROM tb_course
         <where>
             <if test="course.courseName!=null">and course_name like %${course.courseName}%</if>
-            <if test="course.courseClassify!=null">and course_classify_id=#{course.courseClassify}</if>
-            <if test="course.courseClassifyParent!=null">and course_classify_parent=#{course.courseClassifyParent}</if>
+            <if test="course.courseClassify!=null and course.courseClassify gt 0">and course_classify_id=#{course.courseClassify}</if>
+            <if test="course.courseClassifyParent!=null and course.courseClassifyParent gt 0">and course_classify_parent=#{course.courseClassifyParent}</if>
             <if test="course.user!=null and course.user.userId!=null">and user_id=#{course.user.userId}</if>
         </where>
     </select>
