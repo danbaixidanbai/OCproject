@@ -19,7 +19,7 @@
         <include refid="news"/>
         FROM tb_news
         where news_enable=1
-        order by news_priority,news_create_time DESC
+        order by news_priority  DESC
         LIMIT #{pageIndex},#{pageSize}
     </select>
 
@@ -32,7 +32,7 @@
         SELECT
         <include refid="news"/>
         FROM tb_news
-        order by news_priority,news_create_time DESC
+        order by news_priority DESC
         LIMIT #{pageIndex},#{pageSize}
     </select>
 

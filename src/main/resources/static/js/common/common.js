@@ -11,11 +11,11 @@ function getQueryString(name) {
 }
 //截取字符串
 function cutString(key){
-    var img=key.split("http://pp9sub7xv.bkt.clouddn.com/")[1];
+    var img=key.split("http://cdn.poipoipo.top/")[1];
     return img;
 }
 function appendString(key){
-    var img='http://pp9sub7xv.bkt.clouddn.com/'+key;
+    var img='http://cdn.poipoipo.top/'+key;
     return img;
 }
 

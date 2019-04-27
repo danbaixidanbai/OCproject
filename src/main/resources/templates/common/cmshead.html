@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>网校在线学习平台</title>
+</head>
+<body>
+<div th:fragment="cmshead">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <a href="#"    title="网校在线学习平台"></a>
+            <span class="brand" >网校在线学习平台后台管理</span>
+            <span id="admin" class="brand" style="float: right;margin-right: 50px;color:#FFF;"></span>
+        </div>
+    </div>
+    <div class="sidebar-nav">
+        <a href="#dashboard-menu" class="nav-header" data-toggle="collapse">
+            <span style="font-weight: bold;font-size: 16px;">工作区</span>
+        </a>
+        <ul id="dashboard-menu" class="nav nav-list collapse in">
+            <li><a href="/cms/cmsindex">主 页</a></li>
+            <li><a href="/cms/course/pagelist">课程管理</a></li>
+            <li><a href="/cms/news/pagelist">轮播配置</a></li>
+            <li><a href="/cms/classify/index">课程分类管理</a></li>
+            <li><a href="/cms/user/userPageList">用户管理</a></li>
+        </ul>
+        <a href="#accounts-menu" class="nav-header" data-toggle="collapse">
+            <span style="font-weight: bold;font-size: 16px;">我的账号</span>
+        </a>
+        <ul id="accounts-menu" class="nav nav-list collapse in">
+        <li ><a href="/cms/logout">退出</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

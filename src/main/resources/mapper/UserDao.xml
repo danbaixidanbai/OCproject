@@ -13,6 +13,13 @@
         ,user_mobile,user_create_time,user_update_time
     </sql>
 
+    <select id="getAdmin" resultType="com.ouxuxi.entity.User">
+        SELECT
+        <include refid="All_Columns" />
+        FROM tb_user
+        WHERE user_login_name=#{user.userLoginName} AND user_password=#{user.userPassword} And user_type=1;
+    </select>
+
     <select id="queryUserById" resultType="com.ouxuxi.entity.User">
         SELECT
          <include refid="All_Columns" />

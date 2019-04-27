@@ -9,7 +9,6 @@ import com.ouxuxi.util.QiniuCloudUtil;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

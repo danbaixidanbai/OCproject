@@ -49,4 +49,9 @@ public class UserServiceImpl implements UserService {
     public int updateUserByTea(User user)throws Exception {
         return userDao.updateUserByTea(user);
     }
+
+    @Override
+    public User getAdmin(User user) {
+        return userDao.getAdmin(user);
+    }
 }

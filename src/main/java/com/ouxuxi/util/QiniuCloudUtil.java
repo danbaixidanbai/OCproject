@@ -91,7 +91,7 @@ public class QiniuCloudUtil {
 
     public static void getImage(User user){
         //图片的外链地址域名
-        StringBuffer imgUrl=new StringBuffer("http://pp9sub7xv.bkt.clouddn.com/");
+        StringBuffer imgUrl=new StringBuffer("http://cdn.poipoipo.top/");
         if(user.getUserImage()!=null && !user.getUserImage().equals("")){
             imgUrl.append(user.getUserImage());
             user.setUserImage(imgUrl.toString());

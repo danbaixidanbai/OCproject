@@ -32,7 +32,6 @@ $(function(){
             success:function (data) {
                 if (data.errCode == 1) {
                     var classifyParent=data.classifyParent;
-                    console.log(classifyParent);
                     var html='<li class="course-nav-item cur-course-nav">'
                         + '<a >全部</a>'
                         + '</li>';
@@ -166,7 +165,11 @@ $(function(){
                         + '</div></a>';
                 }
                 $('#course').html(html);
-                page();
+                console.log(pageCount);
+                    // 调用分页函数.参数:当前所在页, 总页数(用总条数 除以 每页显示多少条,在向上取整), ajax函数
+                    setPage(pageIndex, pageCount, getCourse);
+
+
             }else{
                 alert(data.errCode+data.errMsg);
             }
@@ -204,30 +207,21 @@ $(function(){
         getCourse();
     });
 
-    $("#page").on("click",".page-num",function (e) {
-         var getClass=$(e.target).attr('class');
-        $(e.target).addClass('page-cur').siblings()
-            .removeClass('page-cur');
-        pageIndex=$(e.target).text();
-        console.log(pageIndex);
-        getCourse();
-    });
-    //用来display首页和尾页，上一页和下一页
-    function page() {
-        if(!(pageCount>1)){
-            $("#page").css('display','none');
-        }else{
-            $("#page").css('display','block');
-        }
-        if(pageIndex==1){
-            $(".index").attr("disabled",true).css("pointer-events","none");
-        }if(pageIndex==pageCount){
-            $(".last").attr("disabled",true).css("pointer-events","none");
-        }if(pageIndex!=1){
-            $(".index").attr("disabled",false).css("pointer-events","block");
-        }if(pageIndex<pageCount){
-            $(".last").attr("disabled",false).css("pointer-events","block");
-        }
+    function setPage(pageCurrent, pageSum, callback) {
+        $(".pagination").bootstrapPaginator({
+            //设置版本号
+            bootstrapMajorVersion: 3,
+            // 显示第几页
+            currentPage: pageCurrent,
+            // 总页数
+            totalPages: pageSum,
+            //当单击操作按钮的时候, 执行该函数, 调用ajax渲染页面
+            onPageClicked: function (event,originalEvent,type,page) {
+                // 把当前点击的页码赋值给currentPage, 调用ajax,渲染页面
+                pageIndex = page;
+                //console.log(currentPage);
+                callback && callback();
+            }
+        })
     }
-    
 });

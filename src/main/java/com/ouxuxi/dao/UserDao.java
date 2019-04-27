@@ -11,4 +11,5 @@ public interface UserDao {
     int  updateUser(@Param("user")User user);
     int  updateUserByAdmin(@Param("user")User user);
     int  updateUserByTea(@Param("user")User user);
+    User getAdmin(@Param("user")User user);
 }

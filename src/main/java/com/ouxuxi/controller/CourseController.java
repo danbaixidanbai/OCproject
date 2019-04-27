@@ -3,6 +3,7 @@ package com.ouxuxi.controller;
 import com.ouxuxi.entity.Course;
 import com.ouxuxi.service.CourseService;
 import com.ouxuxi.util.HttpServletRequestUtil;
+import com.ouxuxi.util.PageCalculator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,12 +38,8 @@ public class CourseController {
             return map;
         }
         List<Course> list=courseService.getCourseByCondition(course,pageIndex,pageSize);
-        int pageCount=0;
         int count=courseService.getCourseCountByCondition(course);
-        pageCount=count/pageSize;
-        if(count%pageSize!=0){
-            pageCount+=1;
-        }
+        int pageCount= PageCalculator.calculatePageCount(count,pageSize);
         map.put("pageCount",pageCount);
         map.put("count",count);
         if(list!=null){

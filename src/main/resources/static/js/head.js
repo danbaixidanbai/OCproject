@@ -21,7 +21,7 @@ $(function(){
                     if(img==null || img==''||img=='null'){
                         img='/image/header.jpg';
                     }else{
-                        img='http://pp9sub7xv.bkt.clouddn.com/'+user.userImage;
+                        img='http://cdn.poipoipo.top/'+user.userImage;
                     }
                     html += '<a href="/home" class="header-nav-item"  style="margin-left:0px;width:40px;height:40px;" id="userdetail">'
                         + '<img id="headerUser" alt="" src="' + img + '"style="width: 35px;height:35px;border-radius:100%;">'

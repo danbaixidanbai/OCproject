@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+   <head>
+        <title>后台管理</title>
+        <meta charset="utf-8">
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+	   <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	   <link href="/css/style.css" rel="stylesheet" type="text/css"/>
+	   <script type="text/javascript" src="/js/common/jquery.js"></script>
+	   <script type="text/javascript" src="/js/common/common.js" charset='utf-8'></script>
+	   <script type="text/javascript" src="/js/common/bootstrap.min.js"></script>
+	   <script type="text/javascript" src="/js/cms/cmshead.js"></script>
+	   <script type="text/javascript" src="/js/cms/news/newsinfo.js"></script>
+	   <!-- 引入资源文件 -->
+	   <div th:replace="common/cmshead :: cmshead"></div>
+
+   </head>
+   
+   <body class="">
+
+	<div class="content">
+		<div class="container-fluid">
+
+			<div class="block span6">
+				 <a class="block-heading f-14" data-toggle="collapse">轮播配置</a>
+				<div class="block-body collapse in p-tb-20">
+					<div role="form">
+						<input type="hidden" id="imageKey">
+						<div class="form-group">
+							<label for="name">图片 <span id="imgErrSpan" style="color:red;font-weight:normal;"></span> </label> 
+							<div>
+								<input type="file" id="pictureImg"  style="display: none;">
+								<div class="ui-avatar-box">
+									<!--<img id="carousel-picture" src="${(entity.picture)!}" style="max-width: 250px;">-->
+                                    <img id="carousel-picture" src="" style="display: none;max-width: 250px;">
+								<a href="javascript:void(0);" id="doload" style="text-decoration: underline;">选择图片</a>
+								</div>
+							</div>
+						</div>
+						<div class="form-group w-600">
+							<label for="name">名称</label> 
+							<input type="text" class="form-control" id="name"  placeholder="请输入名称">
+						</div>
+						<div class="form-group  w-600">
+							<label for="name">链接</label> 
+							<input type="text" class="form-control"  id="url"  placeholder="请输入链接">
+						</div>
+						<div class="form-group w-200">
+							<label for="name">权重</label> 
+							<input type="text" class="form-control" id="priority"  placeholder="请输入权重">
+						</div>
+						<div class="form-group w-200">
+							<label for="name">是否可用</label> 
+							<select id="enable" class="form-control"  type="select">
+								<option value="1" >可用</option>
+								<option value="0" >禁用</option>
+							</select>
+						</div>
+						
+						<button type="submit" id="submit" class="btn btn-primary">提交</button>
+						<button type="button" class="btn btn-default" onclick="window.history.go(-1)">取消</button>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</body>
+</html>

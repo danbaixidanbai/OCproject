@@ -31,8 +31,7 @@ $(function () {
                    $('#user_header').attr("src", img);
                    $('#loginname').html(user.userLoginName);
                    $('#realname').val(user.userName);
-                   $('#gender').attr('value',user.userGender);
-                   $("#gender").find("option:contains(user.userGender)").attr("selected",true);
+                   $("#gender").val(user.userGender);
                    $('#birthday').val(user.userBirthday);
                    $('#mobile').val(user.userMobile);
                    $('#sign').val(user.userSign);
@@ -40,7 +39,7 @@ $(function () {
         });
     }
 
-    $('#doupload').click(function () {
+    $('#doupload').click(function (){
         $('#pictureImg').click();
     });
 

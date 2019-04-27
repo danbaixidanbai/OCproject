@@ -35,4 +35,24 @@ public class HtmlController {
     public String info(){
         return "user/info";
     }
+
+    @RequestMapping(value = "/cms/cmsindex")
+    public String cmsIndex(){
+        return "cms/cmsindex";
+    }
+
+    @RequestMapping(value = "/cms/cmslogin")
+    public String cmsLogin(){
+        return "cms/cmslogin";
+    }
+
+    @RequestMapping(value = "/cms/news/pagelist")
+    public String newsPageList(){
+        return "cms/news/pagelist";
+    }
+
+    @RequestMapping(value = "/cms/news/newsinfo")
+    public String newsInfo(){
+        return "cms/news/newsinfo";
+    }
 }

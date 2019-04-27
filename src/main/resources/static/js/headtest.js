@@ -7,10 +7,6 @@ document.writeln("	    <meta name=\'viewport\' content=\'width=device-width, use
 document.writeln("		<meta name=\'keywords\' content=\'\'>");
 document.writeln("		<meta name=\'description\' content=\'\'>");
 document.writeln("		<title>在线网校学习平台</title>");
-/*document.writeln("		<link href=\'/css/bootstrap.min.css\' rel=\'stylesheet\' type=\'text/css\'/>");
-document.writeln("		<link href=\'/css/reset.css\' rel=\'stylesheet\' type=\'text/css\'/>");
-document.writeln("		<script type=\'text/javascript\' src=\'/js/common/jquery.js\'></script>");
-document.writeln("		<script type=\'text/javascript\' src=\'/js/common/bootstrap.min.js\'></script>");*/
 document.writeln("		<script type=\'text/javascript\' src=\'/js/head.js\'></script>");
 document.writeln("	</head>");
 document.writeln("	<body>");
@@ -21,7 +17,7 @@ document.writeln("				<nav class=\'header-nav\'>");
 document.writeln("					<a href=\'/index\' class=\'header-nav-item\'>首 页</a>");
 document.writeln("					<a href=\'/list\' class=\'header-nav-item\'>课 程</a>");
 document.writeln("					<a href=\'/info\' class=\'header-nav-item\'>我的</a>");
-document.writeln("					<a href=\'/opt/index\'  style=\'width:100px;\' target=\'_blank\' class=\'header-nav-item\'>运营CMS</a>");
+document.writeln("					<a href=\'/cms/cmslogin\'  style=\'width:100px;\' target=\'_blank\' class=\'header-nav-item\'>运营CMS</a>");
 document.writeln("				</nav>");
 document.writeln("				<nav class=\'header-nav\' id=\'headerUserHeader\' style=\'float:right\'>");
 document.writeln("					<a href=\'/login\' class=\'header-nav-item\'  data-toggle=\'modal\'   style=\'margin-right:0px;font-size:14px;\'>登录</a>");
