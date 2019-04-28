@@ -13,4 +13,5 @@ public interface CourseClassifyService {
     //获取二级目录
     public List<CourseClassify> getCourseClassify();
     public CourseClassify getCourseClassufyById(long classifyId);
+    public int addCourseClassufy(CourseClassify courseClassify);
 }

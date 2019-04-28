@@ -56,4 +56,9 @@ public class CourseClassifyServiceImpl implements CourseClassifyService {
     public CourseClassify getCourseClassufyById(long classifyId) {
         return courseClassifyDao.queryCourseClassifyById(classifyId);
     }
+
+    @Override
+    public int addCourseClassufy(CourseClassify courseClassify) {
+        return courseClassifyDao.addCourseClassify(courseClassify);
+    }
 }

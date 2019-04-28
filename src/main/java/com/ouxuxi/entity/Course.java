@@ -13,8 +13,8 @@ public class Course {
     private long courseId;
     private String courseName;
     private String courseImage;
-    private long courseClassify;
-    private long courseClassifyParent;
+    private CourseClassify courseClassify;
+    private CourseClassify courseClassifyParent;
     private User user;
     private int courseCount;
     private int coursePriority;
@@ -22,5 +22,5 @@ public class Course {
     private String courseTime;//时长
     private Date courseCreateTime;
     private Date courseUpdateTime;
-    private int del;
+    private int del;//是否上架
 }

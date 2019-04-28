@@ -1,6 +1,7 @@
 package com.ouxuxi.controller;
 
 import com.ouxuxi.entity.Course;
+import com.ouxuxi.entity.CourseClassify;
 import com.ouxuxi.service.CourseService;
 import com.ouxuxi.util.HttpServletRequestUtil;
 import com.ouxuxi.util.PageCalculator;
@@ -30,13 +31,22 @@ public class CourseController {
         if(pageIndex>0&&pageSize>0){
             long classifyId=HttpServletRequestUtil.getLong(request,"classifyId");
             long parentId=HttpServletRequestUtil.getLong(request,"parentId");
-            if(parentId>0) course.setCourseClassifyParent(parentId);
-            if(classifyId>0) course.setCourseClassify(classifyId);
+            if(parentId>0){
+                CourseClassify classifyparent=new CourseClassify();
+                classifyparent.setClassifyId(parentId);
+                course.setCourseClassifyParent(classifyparent);
+            }
+            if(classifyId>0){
+                CourseClassify classify=new CourseClassify();
+                classify.setClassifyId(classifyId);
+                course.setCourseClassify(classify);
+            }
         }else{
             map.put("errCode",3);
             map.put("errMsg","加载页数失败");
             return map;
         }
+        course.setDel(1);
         List<Course> list=courseService.getCourseByCondition(course,pageIndex,pageSize);
         int count=courseService.getCourseCountByCondition(course);
         int pageCount= PageCalculator.calculatePageCount(count,pageSize);

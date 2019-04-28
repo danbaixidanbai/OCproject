@@ -55,4 +55,14 @@ public class HtmlController {
     public String newsInfo(){
         return "cms/news/newsinfo";
     }
+
+    @RequestMapping(value = "/cms/courseclassify/classifyinfo")
+    public String classifyCourseInfo(){
+        return "cms/courseclassify/classifyinfo";
+    }
+
+    @RequestMapping(value = "/cms/course/courseinfo")
+    public String courseInfo(){
+        return "cms/course/courseinfo";
+    }
 }

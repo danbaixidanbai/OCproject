@@ -76,12 +76,6 @@ $(function(){
         });
     }
 
-    /*function appendString(key){
-        var img='http://pp9sub7xv.bkt.clouddn.com/'+key;
-        //alert(img);
-        return img;
-    }*/
-
     $('.bg-nav a').click(function(){
         index = $('.bg-nav a').index($(this));
         rollBg(index);

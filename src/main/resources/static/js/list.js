@@ -168,8 +168,6 @@ $(function(){
                 console.log(pageCount);
                     // 调用分页函数.参数:当前所在页, 总页数(用总条数 除以 每页显示多少条,在向上取整), ajax函数
                     setPage(pageIndex, pageCount, getCourse);
-
-
             }else{
                 alert(data.errCode+data.errMsg);
             }

@@ -1,14 +1,17 @@
 package com.ouxuxi.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ouxuxi.entity.CourseClassify;
 import com.ouxuxi.service.CourseClassifyService;
 import com.ouxuxi.util.HttpServletRequestUtil;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,47 @@ public class CourseClassifyController {
 
     @Resource
     private CourseClassifyService courseClassifyService;
+
+    //添加分类
+    @PostMapping(value = "/addclassify")
+    private Map<String,Object> addClassify(HttpServletRequest request) throws Exception{
+        Map<String,Object> map=new HashMap<String,Object>();
+        String classifyStr=HttpServletRequestUtil.getString(request,"classify");
+        ObjectMapper mapper=new ObjectMapper();
+        CourseClassify courseClassify=null;
+        courseClassify=mapper.readValue(classifyStr,CourseClassify.class);
+        if(courseClassify!=null){
+            courseClassify.setClassifyCreateTime(new Date());
+            courseClassify.setClassifyUpdateTime(new Date());
+            int num=courseClassifyService.addCourseClassufy(courseClassify);
+            if(num>0){
+                map.put("errCode",1);
+            }else{
+                map.put("errCode",3);
+                map.put("errMsg","添加分类失败");
+            }
+        }else{
+            map.put("errCode",2);
+            map.put("errMsg","信息不能为空");
+        }
+        return map;
+    }
+
+
+    //获取一级分类
+    @GetMapping(value = "/getparent")
+    private Map<String,Object> getParent(HttpServletRequest request){
+        Map<String,Object> map=new HashMap<String,Object>();
+        List<CourseClassify> listParent=courseClassifyService.getCourseClassifyParent();
+        if(listParent!=null&&listParent.size()>0){
+            map.put("list",listParent);
+            map.put("errCode",1);
+        }else{
+            map.put("errCode",2);
+            map.put("errMsg","获取一级分类失败");
+        }
+        return map;
+    }
 
     @GetMapping(value = "/getallclassify")
     private Map<String,Object> getClassify(HttpServletRequest request){

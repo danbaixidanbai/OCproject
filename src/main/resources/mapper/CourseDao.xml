@@ -5,26 +5,38 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ouxuxi.dao.CourseDao">
     <sql id="allColumns">
-        course_id,course_name,course_image,course_classify_id,
-        course_classify_parent,tb_course.user_id,course_priority,course_count,
+        course_id,course_name,course_image,course_priority,course_count,
         course_content,course_create_time,course_update_time,
-        course_time,tb_user.user_name
+        course_time,tb_course.del,
+		tb_course.user_id,tb_user.user_name,
+		tb_course.course_classify_id,cc.course_classify_name as classify,
+        course_classify_parent,cp.course_classify_name as classifyparent
+				from tb_course
+				left JOIN tb_course_classify as cc on tb_course.course_classify_id=cc.course_classify_id
+				left JOIN tb_course_classify as cp on tb_course.course_classify_parent=cp.course_classify_id
+				left JOIN tb_user on tb_course.user_id=tb_user.user_id
     </sql>
     <resultMap id="course" type="com.ouxuxi.entity.Course">
         <id column="course_id" property="courseId"/>
         <result column="course_name" property="courseName"/>
         <result column="course_image" property="courseImage"/>
-        <result column="course_classify_id" property="courseClassify"/>
-        <result column="course_classify_parent" property="courseClassifyParent"/>
         <result column="course_priority" property="coursePriority"/>
         <result column="course_count" property="courseCount"/>
         <result column="course_content" property="courseContent"/>
         <result column="course_create_time" property="courseCreateTime"/>
         <result column="course_update_time" property="courseUpdateTime"/>
         <result column="course_time" property="courseTime"/>
-        <association column="user_id" property="user" javaType="com.ouxuxi.entity.User">
+        <association  property="user" javaType="com.ouxuxi.entity.User">
             <id column="user_id" property="userId"/>
             <result column="user_name" property="userName"/>
+        </association>
+        <association  property="courseClassify" javaType="com.ouxuxi.entity.CourseClassify">
+            <id column="course_classify_id" property="classifyId"/>
+            <result column="classify" property="classifyName"/>
+        </association>
+        <association  property="courseClassifyParent" javaType="com.ouxuxi.entity.CourseClassify">
+            <id column="course_classify_parent" property="classifyId"/>
+            <result column="classifyparent" property="classifyName"/>
         </association>
     </resultMap>
 
@@ -73,6 +85,7 @@
             <if test="course.courseCreateTime!=null">course_create_time=#{course.courseCreateTime},</if>
             <if test="course.courseUpdateTime!=null">course_update_time=#{course.courseUpdateTime},</if>
             <if test="course.courseTime!=null">course_time=#{course.courseTime},</if>
+            <if test="course.del!=null">del=#{course.del}</if>
         </set>
         WHERE course_id=#{course.courseId}
     </update>
@@ -85,21 +98,18 @@
     <select id="queryCourseById" resultMap="course" parameterType="java.lang.Long">
         SELECT
         <include refid="allColumns"/>
-        FROM tb_course,tb_user
         WHERE course_id=#{courseId}
-        and tb_course.user_id=tb_user.user_id
     </select>
 
     <select id="queryCourseList" resultMap="course" parameterType="com.ouxuxi.entity.Course">
         SELECT
         <include refid="allColumns"/>
-        FROM tb_course,tb_user
         <where>
             <if test="course.courseName!=null">and course_name like %${course.courseName}%</if>
-            <if test="course.courseClassify!=null and course.courseClassify gt 0">and course_classify_id=#{course.courseClassify}</if>
-            <if test="course.courseClassifyParent!=null and course.courseClassifyParent gt 0">and course_classify_parent=#{course.courseClassifyParent}</if>
+            <if test="course.courseClassify!=null and course.courseClassify.classifyId gt 0">and tb_course.course_classify_id=#{course.courseClassify.classifyId}</if>
+            <if test="course.courseClassifyParent!=null and course.courseClassifyParent.classifyId gt 0">and course_classify_parent=#{course.courseClassifyParent.classifyId}</if>
             <if test="course.user!=null and course.user.userId!=null">and user_id=#{course.user.userId}</if>
-            and tb_course.user_id=tb_user.user_id
+            <if test="course.del!=null">and tb_course.del=#{course.del}</if>
         </where>
         order by course_count desc
         limit #{pageIndex},#{pageSize}
@@ -111,9 +121,10 @@
         FROM tb_course
         <where>
             <if test="course.courseName!=null">and course_name like %${course.courseName}%</if>
-            <if test="course.courseClassify!=null and course.courseClassify gt 0">and course_classify_id=#{course.courseClassify}</if>
-            <if test="course.courseClassifyParent!=null and course.courseClassifyParent gt 0">and course_classify_parent=#{course.courseClassifyParent}</if>
+            <if test="course.courseClassify!=null and course.courseClassify.classifyId gt 0">and course_classify_id=#{course.courseClassify.classifyId}</if>
+            <if test="course.courseClassifyParent!=null and course.courseClassifyParent.classifyId gt 0">and course_classify_parent=#{course.courseClassifyParent.classifyId}</if>
             <if test="course.user!=null and course.user.userId!=null">and user_id=#{course.user.userId}</if>
+            <if test="course.del!=null">and tb_course.del=#{course.del}</if>
         </where>
     </select>
 

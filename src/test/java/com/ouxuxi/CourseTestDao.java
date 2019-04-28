@@ -24,8 +24,8 @@ public class CourseTestDao {
         Course course=new Course();
         course.setCourseName("springboot2.0");
         course.setCourseImage("urltest");
-        course.setCourseClassify(7);
-        course.setCourseClassifyParent(2);
+        /*course.setCourseClassify(7);
+        course.setCourseClassifyParent(2);*/
         course.setCourseCreateTime(new Date());
         course.setCourseUpdateTime(new Date());
         User user=new User();
@@ -40,8 +40,8 @@ public class CourseTestDao {
         course.setCourseId(1);
         //course.setCourseName("springboot2.0");
         course.setCourseImage("test");
-        course.setCourseClassify(7);
-        course.setCourseClassifyParent(2);
+        /*course.setCourseClassify(7);
+        course.setCourseClassifyParent(2);*/
         course.setCourseCreateTime(new Date());
         course.setCourseUpdateTime(new Date());
         User user=new User();
@@ -56,5 +56,10 @@ public class CourseTestDao {
         System.out.println(course.toString());
         List<Course> list=courseDao.queryCourseList(course,0,10);
         System.out.println("size:"+list.size());
+    }
+    @Test
+    public void queryCourseById(){
+        Course course=courseDao.queryCourseById(1);
+        System.out.println(course.toString());
     }
 }
