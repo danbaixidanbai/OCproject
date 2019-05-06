@@ -26,6 +26,7 @@
         <result column="course_create_time" property="courseCreateTime"/>
         <result column="course_update_time" property="courseUpdateTime"/>
         <result column="course_time" property="courseTime"/>
+        <result column="del" property="del"/>
         <association  property="user" javaType="com.ouxuxi.entity.User">
             <id column="user_id" property="userId"/>
             <result column="user_name" property="userName"/>
@@ -40,7 +41,7 @@
         </association>
     </resultMap>
 
-    <insert id="addCourse" useGeneratedKeys="true" parameterType="com.ouxuxi.entity.Course">
+    <insert id="addCourse" useGeneratedKeys="true" parameterType="com.ouxuxi.entity.Course" keyColumn="course_id" keyProperty="courseId">
         INSERT INTO tb_course
         <trim prefix="(" suffix=")"  suffixOverrides=",">
             <if test="course.courseName!=null">course_name,</if>
@@ -76,16 +77,16 @@
         <set>
             <if test="course.courseName!=null">course_name=#{course.courseName},</if>
             <if test="course.courseImage!=null">course_image=#{course.courseImage},</if>
-            <if test="course.courseClassify!=null">course_classify_id=#{course.courseClassify},</if>
-            <if test="course.courseClassifyParent!=null">course_classify_parent=#{course.courseClassifyParent},</if>
+            <if test="course.courseClassify!=null and course.courseClassify.classifyId gt 0">course_classify_id=#{course.courseClassify.classifyId},</if>
+            <if test="course.courseClassifyParent!=null and course.courseClassifyParent.classifyId gt 0">course_classify_parent=#{course.courseClassifyParent.classifyId},</if>
             <if test="course.user!=null and course.user.userId!=null">user_id=#{course.user.userId},</if>
-            <if test="course.courseCount!=null">course_count=#{course.courseCount},</if>
+            <if test="course.courseCount!=null and course.courseCount gt 0">course_count=#{course.courseCount},</if>
             <if test="course.coursePriority!=null">course_priority=#{course.coursePriority},</if>
             <if test="course.courseContent!=null">course_content=#{course.courseContent},</if>
             <if test="course.courseCreateTime!=null">course_create_time=#{course.courseCreateTime},</if>
             <if test="course.courseUpdateTime!=null">course_update_time=#{course.courseUpdateTime},</if>
             <if test="course.courseTime!=null">course_time=#{course.courseTime},</if>
-            <if test="course.del!=null">del=#{course.del}</if>
+            <if test="course.del!=null and course.del gt 0">del=#{course.del}</if>
         </set>
         WHERE course_id=#{course.courseId}
     </update>
@@ -105,11 +106,11 @@
         SELECT
         <include refid="allColumns"/>
         <where>
-            <if test="course.courseName!=null">and course_name like %${course.courseName}%</if>
+            <if test="course.courseName!=null">and course_name like '%${course.courseName}%' </if>
             <if test="course.courseClassify!=null and course.courseClassify.classifyId gt 0">and tb_course.course_classify_id=#{course.courseClassify.classifyId}</if>
             <if test="course.courseClassifyParent!=null and course.courseClassifyParent.classifyId gt 0">and course_classify_parent=#{course.courseClassifyParent.classifyId}</if>
-            <if test="course.user!=null and course.user.userId!=null">and user_id=#{course.user.userId}</if>
-            <if test="course.del!=null">and tb_course.del=#{course.del}</if>
+            <if test="course.user!=null and course.user.userId!=null">and tb_course.user_id=#{course.user.userId}</if>
+            <if test="course.del!=null and course.del gt 0">and tb_course.del=#{course.del}</if>
         </where>
         order by course_count desc
         limit #{pageIndex},#{pageSize}
@@ -120,11 +121,11 @@
         count(*)
         FROM tb_course
         <where>
-            <if test="course.courseName!=null">and course_name like %${course.courseName}%</if>
+            <if test="course.courseName!=null">and course_name like '%${course.courseName}%' </if>
             <if test="course.courseClassify!=null and course.courseClassify.classifyId gt 0">and course_classify_id=#{course.courseClassify.classifyId}</if>
             <if test="course.courseClassifyParent!=null and course.courseClassifyParent.classifyId gt 0">and course_classify_parent=#{course.courseClassifyParent.classifyId}</if>
             <if test="course.user!=null and course.user.userId!=null">and user_id=#{course.user.userId}</if>
-            <if test="course.del!=null">and tb_course.del=#{course.del}</if>
+            <if test="course.del!=null and course.del gt 0">and tb_course.del=#{course.del}</if>
         </where>
     </select>
 

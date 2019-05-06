@@ -3,6 +3,8 @@ package com.ouxuxi.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
+
 
 //负责html路由的controller
 @Controller
@@ -62,7 +64,17 @@ public class HtmlController {
     }
 
     @RequestMapping(value = "/cms/course/courseinfo")
-    public String courseInfo(){
+    public String cmsCourseInfo(){
         return "cms/course/courseinfo";
+    }
+
+    @RequestMapping(value = "/course/courseinfo")
+    public String courseInfo(){
+        return "course/courseinfo";
+    }
+
+    @RequestMapping(value = "/course/read")
+    public String courseRead(){
+        return "course/read";
     }
 }

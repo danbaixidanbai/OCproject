@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>网校在线学习平台</title>
+</head>
+<body>
+<div th:fragment="userhead">
+    <div class="sidebar-nav">
+        <a href="#dashboard-menu" class="nav-header" data-toggle="collapse">
+            <span style="font-weight: bold;font-size: 16px;">工作区</span>
+        </a>
+        <ul id="dashboard-menu" class="nav nav-list collapse in">
+            <li><a href="/info">个人中心</a></li>
+            <li><a href="/course/courseinfo">我的课程</a></li>
+            <li><a href="/course/learn">学习课程</a></li>
+        </ul>
+        <a href="#accounts-menu" class="nav-header" data-toggle="collapse">
+            <span style="font-weight: bold;font-size: 16px;">我的账号</span>
+        </a>
+        <ul id="accounts-menu" class="nav nav-list collapse in">
+            <li ><a href="/cms/logout">退出</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

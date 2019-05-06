@@ -25,4 +25,14 @@ public class CourseServiceImpl implements CourseService {
     public int getCourseCountByCondition(Course course) {
         return courseDao.queryCourseCount(course);
     }
+
+    @Override
+    public int updateCourse(Course course) {
+        return courseDao.updateCourse(course);
+    }
+
+    @Override
+    public Course getCourseByCourseId(long courseId) {
+        return courseDao.queryCourseById(courseId);
+    }
 }

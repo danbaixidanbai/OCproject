@@ -8,31 +8,32 @@
         <meta name="description" content="">
 	   <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 	   <link href="/css/style.css" rel="stylesheet" type="text/css"/>
+	   <link rel="stylesheet" href="/css/reset.css" type="text/css" />
 	   <script type="text/javascript" src="/js/common/jquery.js"></script>
 	   <script type="text/javascript" src="/js/common/common.js" charset='utf-8'></script>
 	   <script type="text/javascript" src="/js/common/bootstrap-paginator.js"></script>
 	   <script type="text/javascript" src="/js/common/bootstrap.min.js"></script>
-	   <script type="text/javascript" src="/js/cms/cmshead.js"></script>
-	   <script type="text/javascript" src="/js/cms/course/courseinfo.js"></script>
+	   <script type='text/javascript' src='/js/headtest.js' charset='utf-8'></script>
+	   <script type="text/javascript" src="/js/course/courseinfo.js"></script>
 	   <!-- 引入资源文件 -->
-	   <div th:replace="common/cmshead :: cmshead"></div>
+	   <div th:replace="common/userhead :: userhead"></div>
    </head>
    
    <body>
 
 	<div class="content">
 		<div class="container-fluid">
-			
 			<div class="mt-15">
 			<div class="row-fluid">
 				<div class="cms-search">
 					<select class="input-select" id="select">
 						<option value="0">全部</option>
-						<option value="1">上架课程</option>
-						<option value="2">下架课程</option>
+						<option value="1">已上架课程</option>
+						<option value="2">待上架课程</option>
 					</select>
                 	<input type="text" class="search-text" id="name"  style="margin-top:5px;" placeholder="请输入课程名称">
                 	<input type="submit" class="search-btn" id="submit" value="搜索" />
+					<input type="button" class="search-btn" id="addcourse" value="+添加课程" />
                 </div>
 			</div>
 			

@@ -1,10 +1,10 @@
 $(function(){
-    var url='user/islogin';
+    var userId='';
     isLogin();
 
     function isLogin() {
         $.ajax({
-            url:url,
+            url:'/user/islogin',
             datatype :'json',
             type:'get',
             contentType : false,

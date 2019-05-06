@@ -15,9 +15,7 @@ $(function () {
             success:function (data) {
                 if(data.errCode==2){
                     alert(data.errMsg);
-                    setTimeout(function(){
                         window.location.href="/login";
-                    },3000);
                 }else if(data.errCode==3){
                     alert(data.errMsg);
                 }else if(data.errCode==1){

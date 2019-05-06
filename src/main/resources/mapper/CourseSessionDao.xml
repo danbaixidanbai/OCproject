@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ouxuxi.dao.CourseSessionDao">
+    <resultMap id="courseSession" type="com.ouxuxi.entity.CourseSession">
+        <id column="course_session_id" property="courseSessionId"/>
+        <result column="course_session_name" property="courseSessionName"/>
+        <result column="course_session_priority" property="courseSessionPriority"/>
+        <result column="parent" property="parent"/>
+        <result column="course_session_status" property="courseSessionStatus"/>
+        <result column="course_session_video_url" property="courseSessionVideoUrl"/>
+        <result column="course_session_create_time" property="courseSessionCreateTime"/>
+        <result column="course_session_update_time" property="courseSessionUpdateTime"/>
+        <association property="course" javaType="com.ouxuxi.entity.Course">
+            <id column="course_id" property="courseId"/>
+            <id column="course_name" property="courseName"/>
+        </association>
+    </resultMap>
+    <sql id="allColumns">
+        course_session_id,course_session_priority,course_session_name,course_session_status,parent,
+        course_session_video_url,course_session_create_time,course_session_update_time,
+        tb_course_session.course_id,tb_course.course_name
+        from tb_course_session
+        left join tb_course on tb_course_session.course_id=tb_course.course_id
+    </sql>
+
+    <select id="queryCourseSessionByCondition" resultMap="courseSession">
+        select
+        <include refid="allColumns"/>
+        <where>
+            <if test="courseSession.course!=null and courseSession.course.courseId gt 0">
+                and tb_course_session.course_id=#{courseSession.course.courseId}
+            </if>
+            <if test="courseSession.courseSessionName!=null">
+               and  course_session_name like '%${courseSession.courseSessionName}%'
+            </if>
+            <if test="courseSession.parent!=null">
+                and parent=#{courseSession.parent}
+            </if>
+        </where>
+        order by course_session_priority
+    </select>
+
+    <select id="queryCourseSessionByCourseId" resultMap="courseSession">
+        select
+        <include refid="allColumns"/>
+        where tb_course.course_id=#{courseId}
+        order by course_session_priority
+    </select>
+
+    <select id="queryCourseSessionBySessionId" resultMap="courseSession">
+        select
+        <include refid="allColumns"/>
+        where course_session_id=#{courseSessionId}
+        order by course_session_priority
+    </select>
+
+    <select id="queryCourseSessionByParent" resultMap="courseSession">
+        select
+        <include refid="allColumns"/>
+        where parent=#{parent}
+    </select>
+
+    <insert id="addCourseSessison" parameterType="com.ouxuxi.entity.CourseSession" useGeneratedKeys="true" keyColumn="course_session_id" keyProperty="courseSessionId">
+        INSERT INTO tb_course_session
+        <trim prefix="(" suffix=")"  suffixOverrides=",">
+            <if test="courseSession.course!=null and courseSession.course.courseId gt 0">course_id,</if>
+            <if test="courseSession.courseSessionPriority!=null">course_session_priority,</if>
+            <if test="courseSession.courseSessionName!=null">course_session_name,</if>
+            <if test="courseSession.parent!=null">parent,</if>
+            <if test="courseSession.courseSessionVideoUrl !=null">course_session_video_url,</if>
+            <if test="courseSession.courseSessionCreateTime !=null">course_session_create_time,</if>
+            <if test="courseSession.courseSessionUpdateTime !=null">course_session_update_time,</if>
+        </trim>
+        VALUES 
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseSession.course!=null and courseSession.course.courseId gt 0">#{courseSession.course.courseId},</if>
+            <if test="courseSession.courseSessionPriority!=null">#{courseSession.courseSessionPriority},</if>
+            <if test="courseSession.courseSessionName!=null">#{courseSession.courseSessionName},</if>
+            <if test="courseSession.parent!=null">#{courseSession.parent},</if>
+            <if test="courseSession.courseSessionVideoUrl !=null">#{courseSession.courseSessionVideoUrl},</if>
+            <if test="courseSession.courseSessionCreateTime !=null">#{courseSession.courseSessionCreateTime},</if>
+            <if test="courseSession.courseSessionUpdateTime !=null">#{courseSession.courseSessionUpdateTime},</if>
+        </trim>
+    </insert>
+    
+    <update id="updateCourseSession" parameterType="com.ouxuxi.entity.CourseSession" useGeneratedKeys="true">
+        UPDATE tb_course_session
+        <set>
+            <if test="courseSession.course!=null and courseSession.course.courseId gt 0">
+                course_id=#{courseSession.course.courseId},
+            </if>
+            <if test="courseSession.courseSessionPriority!=null">
+                course_session_priority= #{courseSession.courseSessionPriority},
+            </if>
+            <if test="courseSession.courseSessionName!=null">
+                course_session_name=#{courseSession.courseSessionName},
+            </if>
+            <if test="courseSession.parent!=null">
+                parent=#{courseSession.parent},
+            </if>
+            <if test="courseSession.courseSessionVideoUrl !=null">
+                course_session_video_url=#{courseSession.courseSessionVideoUrl},
+            </if>
+            <if test="courseSession.courseSessionCreateTime !=null">
+                course_session_create_time=#{courseSession.courseSessionCreateTime},
+            </if>
+            <if test="courseSession.courseSessionUpdateTime !=null">
+                course_session_update_time=#{courseSession.courseSessionUpdateTime},
+            </if>
+        </set>
+        where course_session_id=#{courseSession.courseSessionId}
+    </update>
+    <delete id="delCourseSessionBySessionId">
+        delete from tb_course_session
+        where course_session_id=#{courseSessionId}
+    </delete>
+
+    <delete id="delCourseSessionByCourseId">
+        delete from tb_course_session
+        where course_id=#{courseId}
+    </delete>
+</mapper>

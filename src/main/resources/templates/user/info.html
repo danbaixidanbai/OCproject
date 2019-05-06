@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="utf-8">
+<html lang="utf-8" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	<head>
 	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,25 +10,19 @@
 
 		<link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
 		<link rel="stylesheet" href="/css/reset.css" type="text/css" />
-
-		<script type='text/javascript'
-				src='/js/common/jquery.js' charset='utf-8'></script>
-		<script type='text/javascript'
-				src='/js/common/common.js' charset='utf-8'></script>
-		<script type='text/javascript'
-				src='/js/user/info.js' charset='utf-8'></script>
-		<script type='text/javascript'
-				src='/js/headtest.js' charset='utf-8'></script>
+		<link href="/css/style.css" rel="stylesheet" type="text/css"/>
+		<script type='text/javascript' src='/js/common/jquery.js' charset='utf-8'></script>
+		<script type="text/javascript" src="/js/common/bootstrap.min.js"></script>
+		<script type='text/javascript' src='/js/common/common.js' charset='utf-8'></script>
+		<script type='text/javascript' src='/js/user/info.js' charset='utf-8'></script>
+		<script type='text/javascript' src='/js/headtest.js' charset='utf-8'></script>
+		<!-- 引入资源文件 -->
+		<div th:replace="common/userhead :: userhead"></div>
 	</head>
 
 	<body>
 
 		<div class="f-main clearfix">
-			<div class="setting-left">
-
-			</div>
-			
-			
 			<div class="setting-right"  >
 				<div>
 					<span class="f-16">个人信息</span>

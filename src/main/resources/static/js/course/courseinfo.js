@@ -12,7 +12,7 @@ $(function(){
     getCmsCourse();
     function getCmsCourse(){
         // 生成新条目的HTML
-        var url = '/cms/course/getcmscourse' + '?' + 'pageIndex=' + pageIndex + '&pageSize='
+        var url = '/course/getcourseinfo' + '?' + 'pageIndex=' + pageIndex + '&pageSize='
             + pageSize + '&del=' + del + '&courseName=' + courseName;
         $.getJSON(url, function(data) {
             if (data.errCode==1) {
@@ -29,9 +29,9 @@ $(function(){
                         image=appendString(image);
                     }
                     if(course[i].del==1){
-                        sale="课程下架";
+                        sale="课程已上架";
                     }if(course[i].del==2){
-                        sale="课程上架";
+                        sale="课程待上架";
                     }
                     html+='<tr id="tr-'+course[i].courseId+'"><td style="width:600px;"><p>'
                         +'<a href="/course/read?courseId='+course[i].courseId+'">'
@@ -58,36 +58,17 @@ $(function(){
                 $('#course').html(html);
                 // 调用分页函数.参数:当前所在页, 总页数(用总条数 除以 每页显示多少条,在向上取整), ajax函数
                 setPage(pageIndex, pageCount, getCmsCourse);
+            }else if(data.errCode==4){
+                alert(data.errCode+data.errMsg);
+                window.location.href="/login";
+            }else if(data.errCode==2){
+                $('#course').html(data.errMsg);
             }else{
                 alert(data.errCode+data.errMsg);
             }
         });
     }
 
-    $('#course').on("click","a",function () {
-        var status=$(this).attr("del");
-        var courseId=$(this).attr("class");
-        var flag=1;
-        if(status==1){
-            flag=2;
-        }if(status==2){
-            flag=1;
-        }
-        $.ajax({
-            url:'/cms/course/updatedel',
-            type:'post',
-            dataType:'json',
-            data:{"courseId":courseId,"del":flag},
-            success:function(resp){
-                var errcode = resp.errCode;
-                if(errcode == 1){
-                    getCmsCourse();
-                }else{
-                    alert(resp.errCode+resp.errMsg);
-                }
-            }
-        });
-    });
     $("#submit").click(function () {
         courseName=$("#name").val();
         pageIndex=1;

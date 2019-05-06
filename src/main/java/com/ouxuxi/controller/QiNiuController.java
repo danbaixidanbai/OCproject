@@ -35,6 +35,11 @@ public class QiNiuController {
         }
 
     }
+
+    @PostMapping(value = "/api/test/video")
+
+
+
     @GetMapping(value = "/hello")
     public String hello(){
         return "helloasd";
