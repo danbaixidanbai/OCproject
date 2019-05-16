@@ -98,7 +98,106 @@ $(function(){
             }
         })
     }
+    //课程添加获取一级分类
+    $('#addcourse').click(function () {
+        $.ajax({
+            url:'/courseclassify/getparent',
+            datatype :'json',
+            type:'get',
+            contentType : false,
+            processData : false,
+            cache : false,
+            success : function(data) {
+                if(data.errCode==1){
+                    var html='';
+                    var list=data.list;
+                    for(var i=0;i<list.length;i++){
+                        html+='<option value="'+list[i].classifyId+'">'+list[i].classifyName+'</option>';
+                    }
+                    $("#classify").html(html);
+                    $("#myModal").modal('show');
+                }else{
+                    alert(data.errCode+data.errMsg);
+                }
+            }
+        });
+    });
 
+    //二级联动
+    $("#classify").on('change',function () {
+        var parentId=$("#classify").val();
+        $.ajax({
+            url:'/courseclassify/getsecondclassify?parentId='+parentId,
+            datatype :'json',
+            type:'get',
+            contentType : false,
+            processData : false,
+            cache : false,
+            success : function(data) {
+                if(data.errCode==1){
+                    var html='';
+                    var list=data.classify;
+                    for(var i=0;i<list.length;i++){
+                        html+='<option value="'+list[i].classifyId+'">'+list[i].classifyName+'</option>';
+                    }
+                    $("#subClassify").html(html);
+                }else{
+                    alert(data.errCode+data.errMsg);
+                }
+            }
+        });
+    });
+
+    $('#save').click(function () {
+        var course={};
+        course.courseName=$("#courseName")[0].value;
+        course.courseClassify={
+            classifyId: $("#subClassify").val()
+        },
+            course.courseClassifyParent={
+                classifyId: $("#classify").val()
+            },
+            course.courseContent=$('#brief').val();
+        var formData=new FormData();
+        formData.append("courseStr",JSON.stringify(course));
+        var picture=$('#pictureImg')[0].files[0];
+        formData.append("picture",picture);
+        $.ajax({
+            url:'/course/addcourse',
+            datatype :'json',
+            data:formData,
+            type:'post',
+            contentType : false,
+            processData : false,
+            cache : false,
+            success : function(data) {
+                if(data.errCode==1){
+                    window.location.reload();
+                }else if(data.errCode==4){
+                    window.location.href='/login';
+                }else{
+                    alert(data.errCode+data.errMsg);
+                }
+            }
+        });
+    });
+
+    $('#doupload').click(function (){
+        $('#pictureImg').click();
+    });
+
+    $('#pictureImg').change(function () {
+        var img = $('#pictureImg').val();
+        if(oc.photoValid(img)){
+            oc.previewUploadImg('pictureImg','coursePicture');
+            $('#coursePicture').show();
+            $('#imgErrSpan').html('');
+            return;
+        }else{
+            $('#imgErrSpan').html('&nbsp;请选择png,jpeg,jpg格式图片');
+            $('#pictureImg').val('');
+        }
+    });
     //课程删除
     function doDelete(id){
         Modal.confirm('课程章节将一并删除，确定删除?',function(){

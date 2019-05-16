@@ -215,7 +215,7 @@ $(function(){
     $('#save').click(function () {
         var course={};
         course.courseId=courseId;
-        course.courseName=$('#courseName').text();
+        course.courseName=$('#name')[0].value;
         course.courseClassify={
             classifyId: $("#subClassify").val()
         },

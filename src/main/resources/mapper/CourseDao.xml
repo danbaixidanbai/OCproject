@@ -46,8 +46,8 @@
         <trim prefix="(" suffix=")"  suffixOverrides=",">
             <if test="course.courseName!=null">course_name,</if>
             <if test="course.courseImage!=null">course_image,</if>
-            <if test="course.courseClassify!=null">course_classify_id,</if>
-            <if test="course.courseClassifyParent!=null">course_classify_parent,</if>
+            <if test="course.courseClassify!=null and course.courseClassify.classifyId gt 0">course_classify_id,</if>
+            <if test="course.courseClassifyParent!=null and course.courseClassifyParent.classifyId gt 0">course_classify_parent,</if>
             <if test="course.user!=null and course.user.userId!=null">user_id,</if>
             <if test="course.courseCount!=null">course_count,</if>
             <if test="course.coursePriority!=null">course_priority,</if>
@@ -60,8 +60,8 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="course.courseName!=null">#{course.courseName},</if>
             <if test="course.courseImage!=null">#{course.courseImage},</if>
-            <if test="course.courseClassify!=null">#{course.courseClassify},</if>
-            <if test="course.courseClassifyParent!=null">#{course.courseClassifyParent},</if>
+            <if test="course.courseClassify!=null and course.courseClassify.classifyId gt 0">#{course.courseClassify.classifyId},</if>
+            <if test="course.courseClassifyParent!=null and course.courseClassifyParent.classifyId gt 0">#{course.courseClassifyParent.classifyId},</if>
             <if test="course.user!=null and course.user.userId!=null">#{course.user.userId},</if>
             <if test="course.courseCount!=null">#{course.courseCount},</if>
             <if test="course.coursePriority!=null">#{course.coursePriority},</if>

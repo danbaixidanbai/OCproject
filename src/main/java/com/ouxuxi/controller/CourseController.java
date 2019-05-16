@@ -29,7 +29,45 @@ public class CourseController {
     @Resource
     private CourseService courseService;
 
-
+    @PostMapping(value = "/addcourse")
+    private Map<String,Object> addCourse(HttpServletRequest request) throws  Exception{
+        Map<String,Object> map=new HashMap<String,Object>();
+        String courseStr= HttpServletRequestUtil.getString(request,"courseStr");
+        ObjectMapper mapper=new ObjectMapper();
+        Course course=null;
+        course=mapper.readValue(courseStr,Course.class);
+        User user= (User) request.getSession().getAttribute("user");
+        if(user==null){
+            map.put("errCode",4);
+            map.put("errMsg","获取用户信息失败");
+            return map;
+        }
+        course.setUser(user);
+        MultipartHttpServletRequest mulRequest=request instanceof MultipartHttpServletRequest?(MultipartHttpServletRequest) request : null;
+        MultipartFile file=mulRequest.getFile("picture");
+        if(file!=null) {
+            byte[] bytes = file.getBytes();
+            String courseImage= QiniuCloudUtil.upLoadImage(bytes);
+            if(courseImage!=null&& !courseImage.equals("")){
+                course.setCourseImage(courseImage);
+            }else{
+                map.put("errCode",2);
+                map.put("errMsg","添加课程图片失败");
+                return map;
+            }
+        }
+        course.setCourseUpdateTime(new Date());
+        course.setCourseCreateTime(new Date());
+        int num=courseService.addCourse(course);
+        if(num>0){
+            map.put("errCode",1);
+            return map;
+        }else{
+            map.put("errCode",3);
+            map.put("errMsg","添加课程失败");
+            return map;
+        }
+    }
 
     @PostMapping(value = "/updatecourse")
     private Map<String,Object> updateCourse(HttpServletRequest request) throws  Exception{
@@ -64,7 +102,7 @@ public class CourseController {
             return map;
         }else{
             map.put("errCode",2);
-            map.put("errMsg","修改用户失败");
+            map.put("errMsg","修改课程失败");
             return map;
         }
     }
