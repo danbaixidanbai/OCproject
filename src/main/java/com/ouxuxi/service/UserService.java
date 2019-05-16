@@ -1,5 +1,6 @@
 package com.ouxuxi.service;
 
+import com.ouxuxi.entity.Course;
 import com.ouxuxi.entity.User;
 
 public interface UserService {
@@ -12,4 +13,5 @@ public interface UserService {
     int  updateUserByTea(User user)throws Exception;
 
     User getAdmin(User user);
+
 }

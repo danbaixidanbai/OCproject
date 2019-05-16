@@ -73,4 +73,9 @@ public class CourseSessionServiceImpl implements CourseSessionService {
         }
         return listDto;
     }
+
+    @Override
+    public int updateSessionStatus(int status, long sessionId) {
+        return courseSessionDao.updateSessionStatus(status,sessionId);
+    }
 }

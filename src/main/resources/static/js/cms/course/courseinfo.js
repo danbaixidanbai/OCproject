@@ -33,12 +33,12 @@ $(function(){
                     }if(course[i].del==2){
                         sale="课程上架";
                     }
-                    html+='<tr id="tr-'+course[i].courseId+'"><td style="width:600px;"><p>'
-                        +'<a href="/course/read?courseId='+course[i].courseId+'">'
+                    html+='<tr id="'+course[i].courseId+'"><td style="width:600px;"><p>'
+                        +'<a href="/cms/course/read?courseId='+course[i].courseId+'">'
                         +'<img src="'+image+'" style="width: 180px;height:100px;float: left;">'
                         +'</a>'
                         +'<div class="ml-15 w-350" style="float:left;">'
-                        +'<a href="/course/read?courseId='+course[i].courseId+'">'
+                        +'<a href="/cms/course/read?courseId='+course[i].courseId+'">'
                         +'<p class="ellipsis"><strong>'+course[i].courseName+'</strong></p>'
                         +'</a>'
                         +'<p class="ellipsis-multi h-40">简介：'+course[i].courseContent+'</p>'
@@ -50,7 +50,7 @@ $(function(){
                         +'</td>'
                         +'<td style="width:120px;">'
                         +'<p>时长：'+course[i].courseTime+'</p>'
-                        +'<p><a href="javascript:void(0)" del="'+course[i].del+'" class="'+course[i].courseId+'">'+sale+'</a></p>'
+                        +'<p><a href="javascript:void(0)" del="'+course[i].del+'" class="sale">'+sale+'</a></p>'
                         +'<p><a href="javascript:void(0)">删除</a></p>'
                         +'</td>'
                         +'</tr>';
@@ -64,9 +64,10 @@ $(function(){
         });
     }
 
-    $('#course').on("click","a",function () {
+    $('#course').on("click",".sale",function () {
         var status=$(this).attr("del");
-        var courseId=$(this).attr("class");
+        var courseId=$(this).parent().parent().parent().attr("id");
+        console.log(courseId);
         var flag=1;
         if(status==1){
             flag=2;

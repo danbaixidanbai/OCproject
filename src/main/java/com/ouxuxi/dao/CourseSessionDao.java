@@ -14,4 +14,5 @@ public interface CourseSessionDao {
     int addCourseSessison(@Param("courseSession")CourseSession courseSession);
     int delCourseSessionBySessionId(long courseSessionId);
     int delCourseSessionByCourseId(long courseId);
+    int updateSessionStatus(@Param("status")int status,@Param("sessionId")long sessionId);
 }

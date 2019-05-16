@@ -35,4 +35,9 @@ public class CourseServiceImpl implements CourseService {
     public Course getCourseByCourseId(long courseId) {
         return courseDao.queryCourseById(courseId);
     }
+
+    @Override
+    public int addCourse(Course course) {
+        return courseDao.addCourse(course);
+    }
 }

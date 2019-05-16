@@ -15,4 +15,5 @@ public interface CourseSessionService {
     int delCourseSessionByCourseId(long courseId);
 
     List<CourseSessionDto> getCourseSessionDto(long courseId);
+    int updateSessionStatus(int status,long sessionId);
 }

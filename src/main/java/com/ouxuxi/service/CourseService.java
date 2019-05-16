@@ -9,4 +9,5 @@ public interface CourseService {
     public int getCourseCountByCondition(Course course);
     public int updateCourse(Course course);
     public Course getCourseByCourseId(long courseId);
+    public int addCourse(Course course);
 }

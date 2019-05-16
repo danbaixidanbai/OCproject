@@ -39,27 +39,28 @@
                 and parent=#{courseSession.parent}
             </if>
         </where>
-        order by course_session_priority
+        order by course_session_create_time
     </select>
 
     <select id="queryCourseSessionByCourseId" resultMap="courseSession">
         select
         <include refid="allColumns"/>
         where tb_course.course_id=#{courseId}
-        order by course_session_priority
+        order by course_session_create_time
     </select>
 
     <select id="queryCourseSessionBySessionId" resultMap="courseSession">
         select
         <include refid="allColumns"/>
         where course_session_id=#{courseSessionId}
-        order by course_session_priority
+        order by course_session_create_time
     </select>
 
     <select id="queryCourseSessionByParent" resultMap="courseSession">
         select
         <include refid="allColumns"/>
         where parent=#{parent}
+        order by course_session_create_time
     </select>
 
     <insert id="addCourseSessison" parameterType="com.ouxuxi.entity.CourseSession" useGeneratedKeys="true" keyColumn="course_session_id" keyProperty="courseSessionId">
@@ -112,6 +113,13 @@
         </set>
         where course_session_id=#{courseSession.courseSessionId}
     </update>
+
+    <update id="updateSessionStatus" useGeneratedKeys="true">
+        UPDATE tb_course_session
+        set course_session_status=#{status}
+        where course_session_id=#{sessionId}
+    </update>
+
     <delete id="delCourseSessionBySessionId">
         delete from tb_course_session
         where course_session_id=#{courseSessionId}
