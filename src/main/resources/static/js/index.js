@@ -1,12 +1,9 @@
 $(function(){
-    console.log(index);
     var index = 0;
     var timer = 4000;
     var size=3;
     getMainBg();
-    console.log(1);
     getMenu();
-
 
     function getMainBg(){
         $.ajax({

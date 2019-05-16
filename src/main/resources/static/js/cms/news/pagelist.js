@@ -36,8 +36,8 @@ $(function(){
                             + '</td>'
                             + '<td style="width:120px;">'
                             + '<p>推荐权重：'+list[i].newsPriority+'</p>'
-                            + '<p><a href="/cms/news/newsinfo?newsId='+list[i].newsId+'">修改</a></p>'
-                            + '<p><a href="javascript:void(0);" id="'+list[i].newsId+'">删除</a></p>'
+                            + '<p><a href="/cms/news/newsinfo?newsId='+list[i].newsId+'" >修改</a></p>'
+                            + '<p><a href="javascript:void(0);" id="'+list[i].newsId+'" class="delnews">删除</a></p>'
                             + '</td>'
                             + '</tr>';
                     }
@@ -49,7 +49,7 @@ $(function(){
             }
         });
     }
-    $("#newstb").on("click","a",function () {
+    $("#newstb").on("click",".delnews",function () {
         var newsId=$(this).attr('id');
         console.log(newsId);
            if(confirm('确定删除?')){

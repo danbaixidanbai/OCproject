@@ -48,9 +48,9 @@ $(function(){
                         + '</div></div>';
                     $("#userdetail").append(loginMsg);
                     show();
-                }else if(resp.errCode == 1) {
+                }/*else if(resp.errCode == 1) {
                     alert("你还没登陆，请重新登录");
-                }
+                }*/
 
 
             }
