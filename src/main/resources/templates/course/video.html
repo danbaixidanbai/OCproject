@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<title>在线网校学习平台</title>
+
+		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<link href="/css/reset.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" src="/js/common/jquery.js"></script>
+		<script type="text/javascript" src="/js/common/common.js" charset='utf-8'></script>
+		<script type="text/javascript" src="/js/common/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/common/bootstrap-paginator.js"></script>
+		<script type="text/javascript" src="/js/course/video.js"></script>
+		<script type='text/javascript' src='/js/headtest.js' charset='utf-8'></script>
+	</head>
+
+	<body>
+		<div class="f-main clearfix">
+			<div class="main-course-left">
+					<div class="course-info">
+						<div class="course-title" style="font-size: 24px;" id="sessionName">asdas</div>
+						<div class="course-video">
+							<video src="" width="100%" height="100%" controls preload id="sessionVideo"></video>
+						</div>
+						<div class="course-menu">
+							<a  href="javascript:void(0)"><span class="menu-item  cur">评论</span></a>
+						</div>
+				</div>
+				
+				<!-- 评论-start -->
+				<div>
+						<div class="comment clearfix">
+							<div class="comment-header"><img class="lecturer-uimg" src="../res/i/header.jpg"></div>
+							<div class="comment-main">
+								<div class="user-name">我是张三</div>
+								<div class="comment-content">这门课真实用！一个列表嵌套好多种布局的时候，用recyclerview控件优雅实现，效率果然提高不少，老板肯定又会夸我，啊哈哈！！！</div>
+								<div class="comment-footer">
+									<span>时间：2016-12-05 </span>
+									<a href="">2-2 我是java第二节</a>
+								</div>
+							</div>
+						</div>		
+								
+						<div class="comment clearfix">
+							<div class="comment-header"><img class="lecturer-uimg" src="../res/i/header.jpg"></div>
+							<div class="comment-main">
+								<div class="user-name">我是张三</div>
+								<div class="comment-content">这门课真实用！一个列表嵌套好多种布局的时候，用recyclerview控件优雅实现，效率果然提高不少，老板肯定又会夸我，啊哈哈！！！</div>
+								<div class="comment-footer">
+									<span>时间：2016-12-05 </span>
+									<a href="">2-2 我是java第二节</a>
+								</div>
+							</div>
+						</div>		
+				</div>
+				
+				<!-- 发布评论-start -->
+				<div style="margin-top: 20px;">
+					<div>
+						<span id="commentTitle">发布评论：</span>
+						<span id="commentTip" style="margin-left: 10px;color:#777;">长度小于200</span>
+					</div>
+					<form id="commentForm" action="${s.base}/courseComment/doComment.html" method="post"  style="margin: 5px 0px;">
+						<input type="hidden" id="commentType" name="type" value="0"/>
+						<input type="hidden" name="sectionId" value="${(courseSection.id)!}"/>
+						<input type="hidden" name="courseId" value="${(courseSection.courseId)!}"/>
+						
+						<textarea id="content" name="content" rows="" cols="100"></textarea>
+						<div>
+							<input id="indeityCode" name="indeityCode"  type="text" placeholder="请输入验证码">
+							<img  onclick="reloadIndityImg();" id="indeityImg"  src="${s.base}/tools/identiry/code.html" style="width:80px;height:26px;margin-left:10px;margin-top:-3px;"/>
+						</div>
+					</form>
+					<input type="button" value="发布" class="btn" onclick="doComment();">
+				</div>
+				
+				<!-- 评论-end -->
+			</div>
+			
+			<!-- 章节-start -->
+			<div class="main-course-right"  >
+				<h4 class="mt-50">所有章节</h4>
+				<div class="video-course-fix-parent">
+					<div class="video-course-fix" id="courseSession"></div>
+				</div>
+			</div>
+			<!-- 章节-end -->
+		</div>
+
+		
+	</body>
+	
+</html>

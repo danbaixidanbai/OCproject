@@ -78,6 +78,16 @@ public class HtmlController {
         return "course/read";
     }
 
+    @RequestMapping(value = "/course/learn")
+    public String courseLearn(){
+        return "course/learn";
+    }
+
+    @RequestMapping(value = "/course/video")
+    public String courseVideo(){
+        return "course/video";
+    }
+
     @RequestMapping(value = "/cms/course/read")
     public String cmsCourseRead(){
         return "cms/course/read";

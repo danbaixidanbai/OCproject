@@ -3,7 +3,9 @@ package com.ouxuxi.controller;
 import com.ouxuxi.dto.CourseSessionDto;
 import com.ouxuxi.entity.Course;
 import com.ouxuxi.entity.CourseSession;
+import com.ouxuxi.entity.User;
 import com.ouxuxi.service.CourseSessionService;
+import com.ouxuxi.service.UserCourseSessionService;
 import com.ouxuxi.util.HttpServletRequestUtil;
 import com.ouxuxi.util.QiniuCloudUtil;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,9 @@ import java.util.Map;
 public class CourseSessionController {
     @Resource
     private CourseSessionService courseSessionService;
+
+    @Resource
+    private UserCourseSessionService userCourseSessionService;
 
 
     @GetMapping(value = "/updatesessionstatus")
@@ -159,5 +164,27 @@ public class CourseSessionController {
             map.put("errMsg","courseId为空");
             return map;
         }
+    }
+
+    @GetMapping(value = "/getvideosession")
+    private Map<String,Object> getvideosession(HttpServletRequest request){
+        Map<String, Object> map = new HashMap<String, Object>();
+        long sessionId=HttpServletRequestUtil.getLong(request,"sessionId");
+        if(sessionId<=0){
+            map.put("errCode",3);
+            map.put("errMsg","获取节失败");
+            return map;
+        }
+        User user=(User)request.getSession().getAttribute("user");
+        long userId=user.getUserId();
+        CourseSession courseSession=userCourseSessionService.getCourseSession(sessionId,userId);
+        if(courseSession==null){
+            map.put("errCode",2);
+            map.put("errMsg","获取节出错");
+            return map;
+        }
+        map.put("courseSession",courseSession);
+        map.put("errCode",1);
+        return map;
     }
 }

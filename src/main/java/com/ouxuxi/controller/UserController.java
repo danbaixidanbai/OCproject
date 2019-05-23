@@ -145,4 +145,23 @@ public class UserController {
         }
     }
 
+    @GetMapping(value ="/getuser")
+    private Map<String,Object> getUser(HttpServletRequest request){
+        Map<String,Object> map=new HashMap<String,Object>();
+        long userId=HttpServletRequestUtil.getLong(request,"userId");
+        if(userId<=0){
+            map.put("errCode",2);
+            map.put("errMsg","userId为空");
+            return map;
+        }
+        User userDemo=userService.getUserById(userId);
+        if(userDemo==null||userDemo.getUserId()<=0){
+            map.put("errCode",3);
+            map.put("errMsg","内部错误，请联系工作人员！！！");
+        }
+        QiniuCloudUtil.getImage(userDemo);
+        map.put("errCode",1);
+        map.put("user",userDemo);
+        return map;
+    }
 }

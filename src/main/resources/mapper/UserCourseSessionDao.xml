@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ouxuxi.dao.UserCourseSessionDao">
+    <resultMap id="result" type="com.ouxuxi.entity.UserCourseSession">
+        <id column="user_course_session_id" property="userCourseSessionId"/>
+        <result column="user_id" property="userId"/>
+        <result column="course_id" property="courseId"/>
+        <result column="course_session_id" property="courseSessionId"/>
+        <result column="status" property="status"/>
+        <result column="rate" property="rate"/>
+        <result column="user_course_session_create_time" property="createTime"/>
+        <result column="user_course_session_update_time" property="updateTime"/>
+    </resultMap>
+    <sql id="allColums">
+        user_course_session_id,user_id,course_id,course_session_id,status,rate,
+        user_course_session_create_time,user_course_session_update_time
+        from tb_user_course_session
+    </sql>
+    <select id="getById" parameterType="java.lang.Long" resultMap="result">
+        select
+        <include refid="allColums"/>
+        where user_course_session_id=#{userCourseSessionId}
+    </select>
+
+
+    <select id="queryLatest" resultMap="result" parameterType="com.ouxuxi.entity.UserCourseSession">
+        select
+        <include refid="allColums"/>
+        <where>
+            <if test="userCourseSession.userId!=null">and user_id=#{userCourseSession.userId}</if>
+            <if test="userCourseSession.courseId!=null and userCourseSession.courseId gt 0 ">and course_id=#{userCourseSession.courseId}</if>
+            <if test="userCourseSession.courseSessionId!=null">and course_session_id=#{userCourseSession.courseSessionId}</if>
+        </where>
+        ORDER BY user_course_session_update_time DESC
+        limit 0,1
+    </select>
+
+    <select id="getAll" resultMap="result" parameterType="com.ouxuxi.entity.UserCourseSession">
+        select
+        <include refid="allColums"/>
+        <where>
+            <if test="userCourseSession.userId!=null">and user_id=#{userCourseSession.userId}</if>
+            <if test="userCourseSession.courseId!=null and userCourseSession.courseId gt 0 ">and course_id=#{userCourseSession.courseId}</if>
+            <if test="userCourseSession.courseSessionId!=null">and course_session_id=#{userCourseSession.courseSessionId}</if>
+        </where>
+        ORDER BY user_course_session_update_time DESC
+    </select>
+
+    <insert id="add" parameterType="com.ouxuxi.entity.UserCourseSession" useGeneratedKeys="true" keyProperty="userCourseSessionId">
+        insert into tb_user_course_session
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userCourseSession.userId!=null">user_id,</if>
+            <if test="userCourseSession.courseId!=null">course_id,</if>
+            <if test="userCourseSession.courseSessionId!=null">course_session_id,</if>
+            <if test="userCourseSession.status!=null">status,</if>
+            <if test="userCourseSession.rate!=null">rate,</if>
+            <if test="userCourseSession.createTime!=null">user_course_session_create_time,</if>
+            <if test="userCourseSession.updateTime!=null">user_course_session_update_time,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userCourseSession.userId!=null">#{userCourseSession.userId},</if>
+            <if test="userCourseSession.courseId!=null">#{userCourseSession.courseId},</if>
+            <if test="userCourseSession.courseSessionId!=null">#{userCourseSession.courseSessionId},</if>
+            <if test="userCourseSession.status!=null">#{userCourseSession.status},</if>
+            <if test="userCourseSession.rate!=null">#{userCourseSession.rate},</if>
+            <if test="userCourseSession.createTime!=null">#{userCourseSession.createTime},</if>
+            <if test="userCourseSession.updateTime!=null">#{userCourseSession.updateTime},</if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.ouxuxi.entity.UserCourseSession" useGeneratedKeys="true">
+        update  tb_user_course_session
+        <set>
+            <if test="userCourseSession.userId!=null">user_id=#{userCourseSession.userId},</if>
+            <if test="userCourseSession.courseId!=null">course_id=#{userCourseSession.courseId},</if>
+            <if test="userCourseSession.courseSessionId!=null">course_session_id=#{userCourseSession.courseSessionId},</if>
+            <if test="userCourseSession.status!=null">status=#{userCourseSession.status},</if>
+            <if test="userCourseSession.rate!=null">rate=#{userCourseSession.rate},</if>
+            <if test="userCourseSession.createTime!=null">user_course_session_create_time =#{userCourseSession.createTime},</if>
+            <if test="userCourseSession.updateTime!=null">user_course_session_update_time =#{userCourseSession.updateTime}</if>
+        </set>
+        where user_course_session_id=#{userCourseSession.userCourseSessionId}
+    </update>
+    <delete id="del" parameterType="java.lang.Long">
+        delete from tb_user_course_session
+        where user_course_session_id=#{userCourseSessionId}
+    </delete>
+</mapper>

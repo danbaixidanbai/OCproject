@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<title>在线网校学习平台</title>
+
+		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<link href="/css/reset.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" src="/js/common/jquery.js"></script>
+		<script type="text/javascript" src="/js/common/common.js" charset='utf-8'></script>
+		<script type="text/javascript" src="/js/common/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/common/bootstrap-paginator.js"></script>
+		<script type="text/javascript" src="/js/course/learn.js"></script>
+		<script type='text/javascript' src='/js/headtest.js' charset='utf-8'></script>
+
+	</head>
+
+	<body>
+		<div class="f-main clearfix">
+			<div class="main-course-left">
+					<!-- 基础信息 - start -->
+					<div class="course-info">
+						<div class="course-title" id="courseName"></div>
+						<div id="courseinfo" class="course-meta">
+							<a href="javascript:void(0)" class="learn-btn" >开始学习</a>
+							<div class="static-item"  >
+								<div class="meta">上次学到</div>
+								<div class="meta-value">上次学到</div>
+							</div>
+							<div class="static-item">
+								<div class="meta">学习人数</div>
+								<div class="meta-value" id="courseCount"></div>
+							</div>
+							<div class="static-item" style="border:none;">
+								<div class="meta">课程时长</div>
+								<div class="meta-value" id="courseTime"></div>
+							</div>
+							<a  href="javascript:void(0)" class="following" style="float: right;margin-top:5px;" title="收藏">
+							</a>
+						</div>
+						<div class="course-brief">
+						</div>
+						<div class="course-menu">
+							<a  href="javascript:void(0)" >
+								<span class="menu-item cur">章节</span>
+							</a>
+							<a  href="javascript:void(0)" >
+								<span  class="menu-item">评论</span>
+							</a>
+							<a  href="javascript:void(0)" >
+								<span class="menu-item">问答</span>
+							</a>
+						</div>
+					</div>
+					<!-- 基础信息 - end -->
+				<!-- 章节信息 - start -->
+				<div id="courseSession"></div>
+				<!-- 章节信息 - end -->
+				
+				<!-- 评论区 start -->
+				<div id="commentQA"></div>
+				<!-- 评论区 end -->
+			</div>
+						
+			<div class="main-course-right"  >
+				<div class="lecturer-item" style="width: 100%;">
+					<img class="lecturer-uimg" id="user_header">
+					<span class="lecturer-name" id="loginname"></span>
+					<span class="lecturer-p" id="sign"></span>
+					<a href="javascript:void(0)">
+						<span id="followSpan" class="follow-btn">关注+</span>
+					</a>
+				</div>
+
+			</div>
+		</div>
+	</body>
+	
+</html>

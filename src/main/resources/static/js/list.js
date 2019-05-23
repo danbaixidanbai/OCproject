@@ -152,7 +152,7 @@ $(function(){
                 pageCount=data.pageCount;
                 var html='';
                 for(var i=0;i<course.length;i++){
-                    html+='<a href="/course?courseId='+course[i].courseId+'"><div class="course-card-container" style="background-image:url('+appendString(course[i].courseImage)+');">'
+                    html+='<a href="/course/learn?courseId='+course[i].courseId+'"><div class="course-card-container" style="background-image:url('+appendString(course[i].courseImage)+');">'
                         + '<div class="course-card-top green-bg" >'
                         + '<span>'+course[i].courseName+'</span>'
                         + '</div>'

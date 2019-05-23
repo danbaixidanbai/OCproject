@@ -1,0 +1,78 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ouxuxi.dao.CourseReplyDao">
+    <resultMap id="result" type="com.ouxuxi.entity.CourseReply">
+        <id column="course_reply_id" property="replyId"/>
+        <result column="course_reply_content" property="replyContent"/>
+        <result column="comment_id" property="commentId"/>
+        <result column="reply_id" property="toReplyId"/>
+        <result column="course_reply_create_time" property="createTime"/>
+        <result column="course_reply_update_time" property="updateTime"/>
+        <association property="user" javaType="com.ouxuxi.entity.User">
+            <id column="userId" property="userId"/>
+            <id column="userName" property="userLoginName"/>
+            <id column="userImage" property="userImage"/>
+        </association>
+        <association property="toUser" javaType="com.ouxuxi.entity.User">
+            <id column="toUserId" property="userId"/>
+            <id column="toUserName" property="userLoginName"/>
+            <id column="toUserImage" property="userImage"/>
+        </association>
+    </resultMap>
+    <sql id="allColums">
+        course_reply_id,course_reply_content,comment_id,reply_id,course_reply_create_time,course_reply_update_time,
+        user.user_id as userId,user.user_login_name as userName,user.user_image as userImage,
+        toUser.user_id as toUserId,toUser.user_login_name as toUserName,toUser.user_image as toUserImage
+        from tb_reply
+        left join tb_user user on user.user_id=tb_reply.user_id
+        left join tb_user toUser on toUser.user_id=tb_reply.touser_id
+    </sql>
+    <select id="getById" resultMap="result" parameterType="com.ouxuxi.entity.CourseReply">
+        select 
+        <include refid="allColums"/>
+        where course_reply_id =#{replyId}
+    </select>
+    <select id="getAll" resultMap="result" parameterType="com.ouxuxi.entity.CourseReply">
+        select
+        <include refid="allColums"/>
+        <where>
+            <if test="courseReply.commentId!=null and courseReply.commentId gt 0">
+                and comment_id=#{courseReply.commentId}
+            </if>
+            <if test="courseReply.user!=null and courseReply.user.userId gt 0">
+                and tb_reply.user_id=#{courseReply.user.userId}
+            </if>
+            <if test="courseReply.toUser!=null and courseReply.toUser.userId gt 0">
+                and tb_reply.touser_id=#{ourseReply.toUser.userId}
+            </if>
+        </where>
+        order by course_reply_update_time
+    </select>
+    <insert id="addCourseReply" parameterType="com.ouxuxi.entity.CourseReply" useGeneratedKeys="true">
+        insert into tb_reply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseReply.replyContent!=null">course_reply_content,</if>
+            <if test="courseReply.commentId!=null and courseReply.commentId gt 0">comment_id,</if>
+            <if test="courseReply.replyId!=null and courseReply.replyId gt 0">reply_id,</if>
+            <if test="courseReply.user!=null and courseReply.user.userId gt 0">user_id,</if>
+            <if test="courseReply.toUser!=null and courseReply.toUser.userId gt 0">touser_id,</if>
+            <if test="courseReply.createTime!=null">course_reply_create_time,</if>
+            <if test="courseReply.updateTime!=null">course_reply_update_time,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseReply.replyContent!=null">#{courseReply.replyContent},</if>
+            <if test="courseReply.commentId!=null and courseReply.commentId gt 0">#{courseReply.commentId},</if>
+            <if test="courseReply.replyId!=null and courseReply.replyId gt 0">#{courseReply.replyId},</if>
+            <if test="courseReply.user!=null and courseReply.user.userId gt 0">#{courseReply.user.userId},</if>
+            <if test="courseReply.toUser!=null and courseReply.toUser.userId gt 0">#{courseReply.toUser.userId},</if>
+            <if test="courseReply.createTime!=null">#{courseReply.createTime},</if>
+            <if test="courseReply.updateTime!=null">#{courseReply.updateTime},</if>
+        </trim>
+    </insert>
+    <delete id="delCourseReply" parameterType="com.ouxuxi.entity.CourseReply">
+        delete from tb_reply
+        where course_reply_id =#{replyId}
+    </delete>
+</mapper>

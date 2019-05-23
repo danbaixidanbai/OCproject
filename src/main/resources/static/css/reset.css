@@ -46,12 +46,12 @@ a:focus{outline:none;}
 .following{
 	width: 32px;
 	height: 37px;
-	background: url('../i/following.png') no-repeat no-repeat 50% 50%;
+	background: url('../image/following.png') no-repeat no-repeat 50% 50%;
 }
 .followed{
 	width: 32px;
 	height: 37px;
-	background: url('../i/followed.png') no-repeat no-repeat 50% 50%;
+	background: url('../image/followed.png') no-repeat no-repeat 50% 50%;
 }
 /*
  * frame
@@ -70,7 +70,7 @@ a:focus{outline:none;}
 .logo{
 	width: 128px;
 	height: 100%;
-	background: url('../i/logo.png') no-repeat no-repeat 50% 50%;
+	background: url('../image/logo.png') no-repeat no-repeat 50% 50%;
 	background-size: auto 63px;
 	float: left;
 }
@@ -1073,7 +1073,7 @@ a:focus{outline:none;}
 .cms-logo{
 	width: 48px;
 	height: 48px;
-	background: url('../i/logo.png') no-repeat no-repeat 50% 50%;
+	background: url('../image/logo.png') no-repeat no-repeat 50% 50%;
 	background-size: auto 63px;
 	float: left;
 	margin-top: -15px;

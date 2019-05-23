@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ouxuxi.dao.CourseCommentDao">
+    <resultMap id="result" type="com.ouxuxi.entity.CourseComment">
+        <id column="course_comment_id" property="courseCommentId"/>
+        <result column="course_comment_content" property="courseCommentContent"/>
+        <result column="course_id" property="courseId"/>
+        <result column="course_session_id" property="courseSessionId"/>
+        <result column="course_comment_create_time" property="createTime"/>
+        <result column="course_comment_update_time" property="updateTime"/>
+        <association property="user" javaType="com.ouxuxi.entity.User">
+            <id column="user_id" property="userId"/>
+            <result column="user_login_name" property="userLoginName"/>
+            <result column="user_image" property="userImage"/>
+        </association>
+    </resultMap>
+    <sql id="allColums">
+        course_comment_id,course_comment_content,course_id,course_session_id,
+        course_comment_create_time,course_comment_update_time,
+        tb_course_comment.user_id,user_image,user_login_name
+        from tb_course_comment
+        left join tb_user on tb_course_comment.user_id=tb_user.user_id
+    </sql>
+
+    <select id="getById" resultMap="result" parameterType="java.lang.Long">
+        select
+        <include refid="allColums"/>
+        where course_comment_id=#{courseCommentId}
+    </select>
+
+    <select id="getAll" parameterType="com.ouxuxi.entity.CourseComment" resultMap="result">
+        select
+        <include refid="allColums"/>
+        <where>
+            <if test="courseComment.courseId!=null and courseComment.courseId gt 0">
+                and course_id=#{courseComment.courseId}
+            </if>
+            <if test="courseComment.courseSessionId!=null and courseComment.courseSessionId gt 0">
+                and course_session_id=#{courseComment.courseSessionId}
+            </if>
+            <if test="courseComment.user!=null and courseComment.user.userId gt 0">
+                and user_id=#{courseComment.user.userId}
+            </if>
+        </where>
+        order by course_comment_update_time
+    </select>
+
+    <insert id="addCourseComment" parameterType="com.ouxuxi.entity.CourseComment" useGeneratedKeys="true">
+        insert into tb_course_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseComment.courseCommentContent !=null">course_comment_content,</if>
+            <if test="courseComment.courseId!=null and courseComment.courseId gt 0">course_id,</if>
+            <if test="courseComment.courseSessionId!=null and courseComment.courseSessionId gt 0">course_session_id,</if>
+            <if test="courseComment.user!=null and courseComment.user.userId gt 0">user_id,</if>
+            <if test="courseComment.createTime!=null">course_comment_create_time,</if>
+            <if test="courseComment.updateTime!=null">course_comment_update_time,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseComment.courseCommentContent !=null">#{courseComment.courseCommentContent},</if>
+            <if test="courseComment.courseId!=null and courseComment.courseId gt 0">#{courseComment.courseId},</if>
+            <if test="courseComment.courseSessionId!=null and courseComment.courseSessionId gt 0">#{courseComment.courseSessionId},</if>
+            <if test="courseComment.user!=null and courseComment.user.userId gt 0">#{courseComment.user.userId},</if>
+            <if test="courseComment.createTime!=null">#{courseComment.createTime},</if>
+            <if test="courseComment.updateTime!=null">#{courseComment.updateTime},</if>
+        </trim>
+    </insert>
+    <delete id="deleteCourseComment" parameterType="java.lang.Long">
+        delete from tb_course_comment
+        where course_comment_id=#{courseCommentId}
+    </delete>
+</mapper>

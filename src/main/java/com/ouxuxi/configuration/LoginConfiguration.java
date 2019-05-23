@@ -25,7 +25,12 @@ public class LoginConfiguration implements WebMvcConfigurer {
         loginRegistry.excludePathPatterns("/list");
         loginRegistry.excludePathPatterns("/kaptcha");
         loginRegistry.excludePathPatterns("/courseclassify/**");
+        loginRegistry.excludePathPatterns("/course/**");
         loginRegistry.excludePathPatterns("/new/**");
+        loginRegistry.excludePathPatterns("/user/getlogin");
+        loginRegistry.excludePathPatterns("/user/getuserbyid");
+        loginRegistry.excludePathPatterns("/user/getuser");
+        loginRegistry.excludePathPatterns("/coursesession/**");
         // 排除资源请求
         loginRegistry.excludePathPatterns("/css/**");
         loginRegistry.excludePathPatterns("/js/**");

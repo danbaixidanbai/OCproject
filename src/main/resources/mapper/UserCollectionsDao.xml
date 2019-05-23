@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ouxuxi.dao.UserCollectionsDao">
+    <resultMap id="result" type="com.ouxuxi.entity.UserCollections">
+        <id column="user_collections_id" property="collectionsId"/>
+        <result column="tips" property="tips"/>
+        <result column="user_collections_create_time" property="colletionsCreateTime"/>
+        <result column="user_collections_update_time" property="colletionsUpdateTime"/>
+        <association property="user" javaType="com.ouxuxi.entity.User">
+            <id column="user_id" property="userId"/>
+            <result column="user_name" property="userName"/>
+        </association>
+        <association property="course" javaType="com.ouxuxi.entity.Course">
+            <id column="course_id" property="courseId"/>
+            <result column="course_name" property="courseName"/>
+            <result column="course_content" property="courseContent"/>
+        </association>
+    </resultMap>
+
+    <sql id="allColums">
+        user_collections_id,tips,user_collections_update_time,
+        tb_user_collections.user_id,tb_user.user_name,
+        tb_user_collections.course_id,tb_course.course_name,tb_course.course_content
+        from tb_user_collections
+        left join tb_user on tb_user_collections.user_id=tb_user.user_id
+        left join tb_course on tb_user_collections.course_id=tb_course.course_id
+    </sql>
+    <select id="getById" resultMap="result" parameterType="java.lang.Long">
+        select
+        <include refid="allColums"/>
+        where user_collections_id=#{collectionsId}
+    </select>
+
+    <select id="getAll" resultMap="result" parameterType="com.ouxuxi.entity.UserCollections">
+        select
+        <include refid="allColums"/>
+        <where>
+            <if test="usercollections.user!=null and usercollections.user.userId gt 0">tb_user_collections.user_id=#{usercollections.user.userId}</if>
+            <if test="usercollections.course!=null and usercollections.course.courseId gt 0">tb_user_collections.course_id=#{usercollections.course.courseId}</if>
+        </where>
+    </select>
+
+
+</mapper>
