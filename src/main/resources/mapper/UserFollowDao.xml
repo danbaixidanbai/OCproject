@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ouxuxi.dao.UserFollowDao">
+    <resultMap id="result" type="com.ouxuxi.entity.UserFollow">
+        <id column="user_follows_id" property="userFollowId"/>
+        <result column="user_id" property="userId"/>
+        <result column="user_follows_create_time" property="createTime"/>
+        <result column="user_follows_update_time" property="updateTime"/>
+        <association property="follower" javaType="com.ouxuxi.entity.User">
+            <id column="follow_id" property="userId"/>
+            <result column="user_login_name" property="userLoginName"/>
+            <result column="user_image" property="userImage"/>
+            <result column="user_sign" property="userSign"/>
+        </association>
+    </resultMap>
+    <sql id="allColums">
+        user_follows_id,tb_user_follows.user_id,user_follows_create_time,user_follows_update_time,
+        follow_id,user_login_name,user_image,user_sign
+        from tb_user_follows
+        left join tb_user on follow_id=tb_user.user_id
+    </sql>
+
+    <insert id="addUserFollow" parameterType="com.ouxuxi.entity.UserFollow" useGeneratedKeys="true">
+        insert into tb_user_follows
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userFollow.userId!=null and userFollow.userId gt 0">user_id,</if>
+            <if test="userFollow.follower!=null and userFollow.follower.userId gt 0">follow_id,</if>
+            <if test="userFollow.createTime!=null">user_follows_create_time,</if>
+            <if test="userFollow.updateTime!=null">user_follows_update_time,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userFollow.userId!=null and userFollow.userId gt 0">#{userFollow.userId},</if>
+            <if test="userFollow.follower!=null and userFollow.follower.userId gt 0">#{userFollow.follower.userId},</if>
+            <if test="userFollow.createTime!=null">#{userFollow.createTime},</if>
+            <if test="userFollow.updateTime!=null">#{userFollow.updateTime},</if>
+        </trim>
+    </insert>
+    <delete id="deleteUserFollow">
+        delete from tb_user_follows
+        where user_id=#{userId} and follow_id=#{followId}
+    </delete>
+    <select id="getAll" parameterType="com.ouxuxi.entity.UserFollow" resultMap="result">
+        select
+        <include refid="allColums"/>
+        <where>
+            <if test="userFollow.userId!=null and userFollow.userId gt 0">
+                and tb_user_follows.user_id=#{userFollow.userId}
+            </if>
+            <if test="userFollow.follower!=null and userFollow.follower.userId gt 0">
+                and follow_id=#{userFollow.follower.userId}
+            </if>
+        </where>
+    </select>
+</mapper>

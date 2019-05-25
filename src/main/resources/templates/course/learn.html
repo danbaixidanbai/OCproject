@@ -10,6 +10,7 @@
 
 		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 		<link href="/css/reset.css" rel="stylesheet" type="text/css"/>
+		<link href="/css/style.css" rel="stylesheet" type="text/css"/>
 		<script type="text/javascript" src="/js/common/jquery.js"></script>
 		<script type="text/javascript" src="/js/common/common.js" charset='utf-8'></script>
 		<script type="text/javascript" src="/js/common/bootstrap.min.js"></script>
@@ -39,31 +40,45 @@
 								<div class="meta">课程时长</div>
 								<div class="meta-value" id="courseTime"></div>
 							</div>
-							<a  href="javascript:void(0)" class="following" style="float: right;margin-top:5px;" title="收藏">
+							<a  href="javascript:void(0)" class="following" id="collectionSpan" style="float: right;margin-top:5px;" title="收藏">
 							</a>
 						</div>
 						<div class="course-brief">
 						</div>
-						<div class="course-menu">
-							<a  href="javascript:void(0)" >
-								<span class="menu-item cur">章节</span>
-							</a>
-							<a  href="javascript:void(0)" >
-								<span  class="menu-item">评论</span>
-							</a>
-							<a  href="javascript:void(0)" >
-								<span class="menu-item">问答</span>
-							</a>
-						</div>
 					</div>
 					<!-- 基础信息 - end -->
-				<!-- 章节信息 - start -->
-				<div id="courseSession"></div>
-				<!-- 章节信息 - end -->
-				
-				<!-- 评论区 start -->
-				<div id="commentQA"></div>
-				<!-- 评论区 end -->
+				<div class="row-fluid">
+					<ul id="myTab" class="nav nav-tabs">
+						<li class="active">
+							<a href="#courseSession" data-toggle="tab">章节</a>
+						</li>
+						<li ><a href="#comment" data-toggle="tab">评论</a></li>
+					</ul>
+
+					<div id="myTabContent" class="tab-content" style="padding: 10px;">
+						<!-- 课程章节-start -->
+						<div class="tab-pane fade active in" id="courseSession">
+						</div>
+						<!-- 课程章节-end -->
+
+						<!-- 评论 -start -->
+						<div class="tab-pane fade" id="comment">
+							<!-- 发布评论-start -->
+							<div style="margin-top: 20px;">
+								<div>
+									<span id="commentTitle">发布评论：</span>
+									<span id="commentTip" style="margin-left: 10px;color:#777;">长度小于200</span>
+								</div>
+								<div id="commentForm"  style="margin: 5px 0px;">
+									<textarea id="content" name="content" rows="" cols="100"></textarea>
+									<input type="button" value="发表评论" class="btn" id="submit">
+								</div>
+							</div>
+							<!-- 发布评论-end -->
+						</div>
+						<!-- 评论 -end -->
+					</div>
+				</div>
 			</div>
 						
 			<div class="main-course-right"  >

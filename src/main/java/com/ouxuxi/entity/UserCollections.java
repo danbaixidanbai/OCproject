@@ -14,7 +14,7 @@ public class UserCollections {
     private User user;
     private Course course;
     private String tips;
-    private Date colletionsCreateTime;
+    private Date collectionsCreateTime;
     private Date collectionsUpdateTime;
     private int del;
 }

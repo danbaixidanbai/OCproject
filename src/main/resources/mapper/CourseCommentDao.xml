@@ -45,7 +45,7 @@
                 and user_id=#{courseComment.user.userId}
             </if>
         </where>
-        order by course_comment_update_time
+        order by course_comment_update_time desc
     </select>
 
     <insert id="addCourseComment" parameterType="com.ouxuxi.entity.CourseComment" useGeneratedKeys="true">
@@ -53,7 +53,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="courseComment.courseCommentContent !=null">course_comment_content,</if>
             <if test="courseComment.courseId!=null and courseComment.courseId gt 0">course_id,</if>
-            <if test="courseComment.courseSessionId!=null and courseComment.courseSessionId gt 0">course_session_id,</if>
+            <if test="courseComment.courseSessionId!=null">course_session_id,</if>
             <if test="courseComment.user!=null and courseComment.user.userId gt 0">user_id,</if>
             <if test="courseComment.createTime!=null">course_comment_create_time,</if>
             <if test="courseComment.updateTime!=null">course_comment_update_time,</if>
@@ -62,7 +62,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="courseComment.courseCommentContent !=null">#{courseComment.courseCommentContent},</if>
             <if test="courseComment.courseId!=null and courseComment.courseId gt 0">#{courseComment.courseId},</if>
-            <if test="courseComment.courseSessionId!=null and courseComment.courseSessionId gt 0">#{courseComment.courseSessionId},</if>
+            <if test="courseComment.courseSessionId!=null">#{courseComment.courseSessionId},</if>
             <if test="courseComment.user!=null and courseComment.user.userId gt 0">#{courseComment.user.userId},</if>
             <if test="courseComment.createTime!=null">#{courseComment.createTime},</if>
             <if test="courseComment.updateTime!=null">#{courseComment.updateTime},</if>

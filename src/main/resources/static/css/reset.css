@@ -172,7 +172,7 @@ a:focus{outline:none;}
 	margin:0 auto;
 	text-align: center;
 	color: #FFF;
-	cursor: point;
+	/*cursor: point;*/
 	font-size: 18px;
 }
 
@@ -525,7 +525,7 @@ a:focus{outline:none;}
     word-break: break-all;
     word-wrap: break-word;
     overflow: hidden;
-    text-overflow: -o-ellipsis-lastline;
+    /*text-overflow: -o-ellipsis-lastline;*/
     -webkit-line-clamp: 1;
 }
 
@@ -546,7 +546,7 @@ a:focus{outline:none;}
     word-break: break-all;
     word-wrap: break-word;
     overflow: hidden;
-    text-overflow: -o-ellipsis-lastline;
+    /*text-overflow: -o-ellipsis-lastline;*/
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }

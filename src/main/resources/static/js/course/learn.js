@@ -1,7 +1,7 @@
 $(function() {
     var courseId = getQueryString("courseId");
     getUser();
-
+    iscollection();
     function getUser() {
         $.ajax({
             url:'/user/getuserbyid',
@@ -37,29 +37,12 @@ $(function() {
             success: function (data) {
                 if (data.errCode == 1) {
                     var course = data.course;
-                    $('#courseName').val(course.courseName);
-                    $('#courseCount').val(course.courseCount);
-                    $('#courseTime').val(course.courseTime);
-                    $('.course-brief').val('简介：'+course.courseContent);
-                    var html='<div class="course-title">'+course.courseName+'</div>'
-                        +'<a href="/course/video?courseId='+courseId+'" class="learn-btn" >开始学习</a>'
-                        + '<div class="static-item">'
-                        + '<div class="meta">上次学到</div>'
-                        + '<div class="meta-value" title="上次学到">上次学到</div>'
-                        + '</div>'
-                        + '<div class="static-item">'
-                        + '<div class="meta">学习人数</div>'
-                        + '<div class="meta-value">'+course.courseCount+'</div>'
-                        + '</div>'
-                        + '<div class="static-item" style="border:none;">'
-                        + '<div class="meta">课程时长</div>'
-                        + '<div class="meta-value">'+course.courseTime+'</div>'
-                        + '</div>'
-                        + '<a id="collectionSpan" cid="'+courseId+'" href="javascript:void(0)" class="following" style="float: right;margin-top:5px;" >'
-                        + '</a>'
-                        +'<div class="course-brief">简介：'+course.courseContent+'</div>';
-                    $('#courseinfo').html(html);
+                    $('#courseName').html(course.courseName);
+                    $('#courseCount').html(course.courseCount);
+                    $('#courseTime').html(course.courseTime);
+                    $('.course-brief').html('简介：'+course.courseContent);
                     getFollow(course.user.userId);
+                    getComment(course.user.userId);
                 } else {
                     alert(data.errCode + data.errMsg);
                 }
@@ -129,6 +112,151 @@ $(function() {
         });
     }
 
+    function getComment(userId) {
+        $.ajax({
+            url:'/coursecomment/getcommentbycourseid?courseId='+courseId,
+            type:'get',
+            dataType:'json',
+            contentType: false,
+            processData: false,
+            cache: false,
+            success:function (data) {
+                if (data.errCode == 1) {
+                    var list=data.courseCommentDto;
+                    console.log(list);
+                    var html='';
+                    for(var i=0;i<list.length;i++){
+                        var courseComment=list[i].courseComment;
+                        console.log(courseComment);
+                        var image=courseComment.user.userImage;
+                        if(oc.isEmpty(image)){
+                            image='/image/header.jpg';
+                        }else{
+                            image=appendString(image);
+                        }
+                        html+='<div class="comment clearfix">'
+                            + '<div class="comment-header"><img class="lecturer-uimg" src="'+image+'"></div>'
+                            + '<div class="comment-main" style="float:left;">'
+                            + '<div class="user-name">'+courseComment.user.userLoginName+'</div>'
+                            + '<div class="comment-content">'+courseComment.courseCommentContent+'</div>'
+                            + '<div class="comment-footer">'
+                            + '<span>时间：'+new Date(courseComment.updateTime).Format("yyyy-MM-dd hh:mm")+'</span>'
+                            +'<a herf="javaScript:void(0);" class="commentreply" u-id="'+courseComment.user.userId+'" comment-id="'+courseComment.courseCommentId+'">回复</a>'
+                            + '</div>';
+                            var reply=list[i].list;
+                            for(var j=0;j<reply.length;j++){
+                                var img=reply[j].user.userImage;
+                                if(oc.isEmpty(img)){
+                                    img='/image/header.jpg';
+                                }else{
+                                    img=appendString(img);
+                                }
+                                var html2='';
+                                if(reply[j].toReplyId==0||reply[j].toUser == undefined || reply[j].toUser == null || reply[j].toUser == '' || reply[j].toUser == 'null' || reply[j].toUser == 'undefined'){
+                                    html2+=reply[j].user.userLoginName+':';
+                                }else{
+                                    html2+=reply[j].user.userLoginName+' 回复<a herf="javaScript:void(0);">@ '+reply[j].toUser.userLoginName+'</a>';
+                                }
+                               html+='<div class="comment-main" reply-id="'+reply[j].replyId+'"><div class="comment-header"><img class="lecturer-uimg" src="'+img+'"></div><div class="user-name"style="float:left;">'+html2
+                                   + reply[j].replyContent
+                                   + '<div class="comment-footer">'
+                                   + '<span>时间：'+new Date(reply[j].updateTime).Format("yyyy-MM-dd hh:mm")+'</span>'
+                                   +'<a herf="javaScript:void(0);" class="commentreply" u-id="'+reply[j].user.userId+'" t-id="'+reply[j].toUser.userId+'" comment-id="'+courseComment.courseCommentId+'">回复</a>'
+                                   + '</div>'
+                                   + '</div>'
+                                   + '</div>';
+                            }
+                        html+='</div>'
+                            + '</div>'
+                    }
+                    console.log(html);
+                    $('#comment').append(html);
+                }
+            }
+        });
+    }
+    //评论回复弹窗
+    $('#comment').on("click",'.commentreply',function () {
+        $(".reply_textarea").remove();
+        $(this).parent().append('<div style="margin-top: 20px;" class="reply_textarea">' +
+                                '<div class="commentForm" style="margin: 5px 0px;">' +
+                                '<textarea class="replycontent" rows="" cols="100"></textarea>' +
+                                '<input type="button" value="发表评论" class="btn replysubmit">' +
+                                '</div>' +
+                                '</div>');
+    });
+    //评论回复提交
+    $('#comment').on("click",'.replysubmit',function () {
+        var uid=$(this).parent().parent().prev().attr('u-id');
+        var tid=$(this).parent().parent().prev().attr('t-id');
+        var replyId=0;
+        if(tid == undefined || tid== null || tid=='null'|| tid=='undefined'){
+            replyId=0;
+        }else{
+            replyId=$(this).parent().parent().parent().parent().parent().attr('reply-id');
+        }
+        var commentId=$(this).parent().parent().prev().attr('comment-id');
+        var replyContent=$('.replycontent').val();
+        console.log(uid);
+        console.log(commentId);
+        var formData=new FormData();
+        formData.append("toUserId",uid);
+        formData.append("commentId",commentId);
+        formData.append("replyContent",replyContent);
+        formData.append("replyId",replyId);
+        $.ajax({
+            url:'/coursecomment/addreply',
+            type:'post',
+            dataType:'json',
+            contentType: "application/json",
+            data:formData,
+            contentType: false,
+            processData: false,
+            cache: false,
+            success:function (data) {
+                if (data.errCode == 1) {
+                    alert("回复成功！！！");
+                    window.location.reload();
+                }else if(data.errCode==3){
+                    alert(data.errCode+data.errMsg);
+                    window.location.href="/login";
+                }else{
+                    alert(data.errCode+data.errMsg);
+                }
+            }
+        });
+
+    });
+
+    //发布评论
+    $('#submit').click(function () {
+        var formData=new FormData();
+        var comment=$('#content').val();
+        formData.append("courseId",courseId);
+        formData.append("comment",comment);
+        $.ajax({
+            url:'/coursecomment/addcomment',
+            type:'post',
+            dataType:'json',
+            contentType: "application/json",
+            data:formData,
+            contentType: false,
+            processData: false,
+            cache: false,
+            success:function (data) {
+                if (data.errCode == 1) {
+                    alert("评论成功！！！");
+                    window.location.reload();
+                }else if(data.errCode==3){
+                    alert(data.errCode+data.errMsg);
+                    window.location.href="/login";
+                }else{
+                    alert(data.errCode+data.errMsg);
+                }
+            }
+        });
+    });
+
     //获取学习进度
     function getLasted(){
         $.ajax({
@@ -145,6 +273,63 @@ $(function() {
             }
         });
     }
+
+    //判断是否收藏
+    function iscollection(){
+        $.ajax({
+            url:'/collection/iscollection?courseId='+courseId,
+            type:'get',
+            dataType:'json',
+            contentType: false,
+            processData: false,
+            cache: false,
+            success:function (data) {
+                if(data.errCode == 1) {
+                    $('#collectionSpan').removeClass('following');
+                    $('#collectionSpan').attr('class','followed');
+                }else if(data.errCode == 4){
+                    $('#collectionSpan').removeClass('followed');
+                    $('#collectionSpan').attr('class','following');
+                }else if(data.errCode == 3){
+                    alert(data.errCode+data.errMsg);
+                    window.location.href="/login";
+                }else{
+                    alert(data.errCode+data.errMsg);
+                }
+            }
+        });
+    }
+    $('#courseinfo').on('click','#collectionSpan',function () {
+        var status=$('#collectionSpan').attr('class');
+        console.log(status);
+        var flag=0;
+        if(status=='following'){
+            flag=1;
+            $('#collectionSpan').attr('class','followed');
+        }else{
+            $('#collectionSpan').attr('class','following');
+        }
+        $.ajax({
+            url:'/collection/docollection?courseId='+courseId+'&flag='+flag,
+            type:'get',
+            dataType:'json',
+            contentType: false,
+            processData: false,
+            cache: false,
+            success:function (data) {
+                if(data.errCode == 1) {
+                    alert("修改成功");
+                }else if(data.errCode == 3){
+                    alert(data.errCode+data.errMsg);
+                    window.location.href="/login";
+                }else{
+                    alert(data.errCode+data.errMsg);
+                }
+            }
+        });
+    });
+
+
 
     //实现 章节鼠标焦点 动态效果
     $('#courseSession').on('hover','.chapter li',function(){

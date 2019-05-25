@@ -7,8 +7,8 @@
     <resultMap id="result" type="com.ouxuxi.entity.UserCollections">
         <id column="user_collections_id" property="collectionsId"/>
         <result column="tips" property="tips"/>
-        <result column="user_collections_create_time" property="colletionsCreateTime"/>
-        <result column="user_collections_update_time" property="colletionsUpdateTime"/>
+        <result column="user_collections_create_time" property="collectionsCreateTime"/>
+        <result column="user_collections_update_time" property="collectionsUpdateTime"/>
         <association property="user" javaType="com.ouxuxi.entity.User">
             <id column="user_id" property="userId"/>
             <result column="user_name" property="userName"/>
@@ -21,7 +21,7 @@
     </resultMap>
 
     <sql id="allColums">
-        user_collections_id,tips,user_collections_update_time,
+        user_collections_id,tips,user_collections_update_time,user_collections_create_time,
         tb_user_collections.user_id,tb_user.user_name,
         tb_user_collections.course_id,tb_course.course_name,tb_course.course_content
         from tb_user_collections
@@ -38,10 +38,30 @@
         select
         <include refid="allColums"/>
         <where>
-            <if test="usercollections.user!=null and usercollections.user.userId gt 0">tb_user_collections.user_id=#{usercollections.user.userId}</if>
-            <if test="usercollections.course!=null and usercollections.course.courseId gt 0">tb_user_collections.course_id=#{usercollections.course.courseId}</if>
+            <if test="usercollections.user!=null and usercollections.user.userId gt 0">and tb_user_collections.user_id=#{usercollections.user.userId}</if>
+            <if test="usercollections.course!=null and usercollections.course.courseId gt 0">and tb_user_collections.course_id=#{usercollections.course.courseId}</if>
         </where>
     </select>
+    <insert id="addUserCollections" parameterType="com.ouxuxi.entity.UserCollections" useGeneratedKeys="true">
+        insert into tb_user_collections
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="usercollections.user!=null and usercollections.user.userId gt 0">user_id,</if>
+            <if test="usercollections.course!=null and usercollections.course.courseId gt 0">course_id,</if>
+            <if test="usercollections.collectionsCreateTime!=null">user_collections_create_time,</if>
+            <if test="usercollections.collectionsUpdateTime!=null">user_collections_update_time,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="usercollections.user!=null and usercollections.user.userId gt 0">#{usercollections.user.userId},</if>
+            <if test="usercollections.course!=null and usercollections.course.courseId gt 0">#{usercollections.course.courseId},</if>
+            <if test="usercollections.collectionsCreateTime!=null">#{usercollections.collectionsCreateTime},</if>
+            <if test="usercollections.collectionsUpdateTime!=null">#{usercollections.collectionsUpdateTime},</if>
+        </trim>
+    </insert>
 
+    <delete id="delUserCollections" >
+        delete from tb_user_collections
+        where user_id=#{userId} and course_id=#{courseId}
+    </delete>
 
 </mapper>
