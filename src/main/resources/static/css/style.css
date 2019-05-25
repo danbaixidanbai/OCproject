@@ -71,11 +71,6 @@ body {
 	width: 80px;
 	text-align: right;
 }
-a{text-decoration: none;display: block;outline:none;}
-a:focus {  outline:none;   -moz-outline:none;}
-a:hover {
-  text-decoration: none;
-}
 .link-a{
 	float: left;
 	margin-right: 10px;
@@ -1129,13 +1124,9 @@ table.table.list tr:first-child td {
 *评论-start
 **/
 .comment{
-	padding: 0px 10px 20px 10px;
 	border-bottom: 1px solid #eee;
 	margin: 20px 0px;
 	min-height: 120px;
-}
-.comment-main{
-		width: 100%;
 }
 .comment-header img{
 	width: 40px;
@@ -1146,14 +1137,18 @@ table.table.list tr:first-child td {
 	font-weight: bold;
 }
 .comment-main .comment-content{
-	margin-top: 20px;
+	margin-top: 10px;
 	width:100%;
 }
-.comment-main .comment-footer{
-	margin-top: 20px;
+.comment-footer{
+	margin-top: 10px;
 }
 .comment-main .comment-footer a{
 	display: inline-block;
+}
+
+.comment-reply {
+	padding: 10px 0;
 }
 /**
 *评论-end
@@ -1169,6 +1164,10 @@ table.table.list tr:first-child td {
 }
 .tr-bg-gray:HOVER{
 	background-color: #CCC;
-	cursor: point;
+	cursor: pointer;
 }
 
+.reply-content,span{
+	word-break: break-all;
+	word-wrap: break-word;
+}

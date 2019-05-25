@@ -179,6 +179,7 @@ $(function(){
         parentId=$(e.target).attr('id');
         if(oc.isEmpty(parentId)){
             parentId='';
+            classifyId='';
             url='/courseclassify/getallclassify';
             getALLClassify(url);
             getCourse();

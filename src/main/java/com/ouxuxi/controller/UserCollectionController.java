@@ -85,12 +85,32 @@ public class UserCollectionController {
         }else if(flag==0){
             int num=userCollectionsService.deleteUserCollection(user.getUserId(),courseId);
             if(num>0){
-                map.put("errCode",1);
+                map.put("errCode",6);
                 return map;
             }
         }
         map.put("errCode",4);
         map.put("errMsg","修改收藏失败");
         return map;
+    }
+    @GetMapping(value = "/getcourse")
+    private Map<String,Object> getcourse(HttpServletRequest request){
+        Map<String,Object> map=new HashMap<String,Object>();
+        User user= (User) request.getSession().getAttribute("user");
+        if(user==null&&user.getUserId()<0){
+            map.put("errCode",3);
+            map.put("errMsg","请重新登录");
+            return map;
+        }
+        List<UserCollections> list=userCollectionsService.getAll(user.getUserId(),0);
+        if(list.size()>0){
+            map.put("errCode",1);
+            map.put("list",list);
+            return map;
+        }else{
+            map.put("errCode",2);
+            map.put("errMsg","你还没有关注课程！");
+            return map;
+        }
     }
 }

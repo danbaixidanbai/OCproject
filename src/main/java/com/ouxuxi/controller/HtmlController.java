@@ -92,4 +92,9 @@ public class HtmlController {
     public String cmsCourseRead(){
         return "cms/course/read";
     }
+
+    @RequestMapping(value = "/user/collection")
+    public String userCollection(){
+        return "user/collection";
+    }
 }

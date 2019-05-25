@@ -17,13 +17,18 @@
             <id column="course_id" property="courseId"/>
             <result column="course_name" property="courseName"/>
             <result column="course_content" property="courseContent"/>
+            <result column="course_image" property="courseImage"/>
+            <result column="course_count" property="courseCount"/>
+            <result column="course_update_time" property="courseUpdateTime"/>
+            <result column="course_time" property="courseTime"/>
         </association>
     </resultMap>
 
     <sql id="allColums">
         user_collections_id,tips,user_collections_update_time,user_collections_create_time,
         tb_user_collections.user_id,tb_user.user_name,
-        tb_user_collections.course_id,tb_course.course_name,tb_course.course_content
+        tb_user_collections.course_id,tb_course.course_name,tb_course.course_content,tb_course.course_image,
+        tb_course.course_count,tb_course.course_update_time,course_time
         from tb_user_collections
         left join tb_user on tb_user_collections.user_id=tb_user.user_id
         left join tb_course on tb_user_collections.course_id=tb_course.course_id

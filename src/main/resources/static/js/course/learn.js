@@ -105,9 +105,11 @@ $(function() {
                         img='/image/header.jpg';
                 }
                 console.log(img);
+                $("#u-id").val(userId);
                 $('#user_header').attr("src", img);
                 $('#loginname').text(user.userLoginName);
                 $('#sign').text(user.userSign);
+                isfollow(userId);
             }
         });
     }
@@ -136,7 +138,7 @@ $(function() {
                         }
                         html+='<div class="comment clearfix">'
                             + '<div class="comment-header"><img class="lecturer-uimg" src="'+image+'"></div>'
-                            + '<div class="comment-main" style="float:left;">'
+                            + '<div class="comment-main">'
                             + '<div class="user-name">'+courseComment.user.userLoginName+'</div>'
                             + '<div class="comment-content">'+courseComment.courseCommentContent+'</div>'
                             + '<div class="comment-footer">'
@@ -155,10 +157,15 @@ $(function() {
                                 if(reply[j].toReplyId==0||reply[j].toUser == undefined || reply[j].toUser == null || reply[j].toUser == '' || reply[j].toUser == 'null' || reply[j].toUser == 'undefined'){
                                     html2+=reply[j].user.userLoginName+':';
                                 }else{
-                                    html2+=reply[j].user.userLoginName+' 回复<a herf="javaScript:void(0);">@ '+reply[j].toUser.userLoginName+'</a>';
+                                    html2+=reply[j].user.userLoginName+' 回复<a herf="javaScript:void(0);">@'+reply[j].toUser.userLoginName+'</a>';
                                 }
-                               html+='<div class="comment-main" reply-id="'+reply[j].replyId+'"><div class="comment-header"><img class="lecturer-uimg" src="'+img+'"></div><div class="user-name"style="float:left;">'+html2
+                               html+='<div class="comment-reply clearfix" reply-id="'+reply[j].replyId+'">' +
+                                   '<div class="comment-header">' +
+                                   '<img class="lecturer-uimg" src="'+img+'">' +
+                                   '</div>' +
+                                   '<div class="user-name"style="float:left;">'+html2+'<span class="reply-content">'
                                    + reply[j].replyContent
+                                   + '</span>'
                                    + '<div class="comment-footer">'
                                    + '<span>时间：'+new Date(reply[j].updateTime).Format("yyyy-MM-dd hh:mm")+'</span>'
                                    +'<a herf="javaScript:void(0);" class="commentreply" u-id="'+reply[j].user.userId+'" t-id="'+reply[j].toUser.userId+'" comment-id="'+courseComment.courseCommentId+'">回复</a>'
@@ -299,15 +306,13 @@ $(function() {
             }
         });
     }
+    //点击更改是否收藏
     $('#courseinfo').on('click','#collectionSpan',function () {
         var status=$('#collectionSpan').attr('class');
         console.log(status);
         var flag=0;
         if(status=='following'){
             flag=1;
-            $('#collectionSpan').attr('class','followed');
-        }else{
-            $('#collectionSpan').attr('class','following');
         }
         $.ajax({
             url:'/collection/docollection?courseId='+courseId+'&flag='+flag,
@@ -318,7 +323,11 @@ $(function() {
             cache: false,
             success:function (data) {
                 if(data.errCode == 1) {
-                    alert("修改成功");
+                    alert("收藏成功");
+                    $('#collectionSpan').attr('class','followed');
+                }else if(data.errCode == 6){
+                    alert("取消收藏成功");
+                    $('#collectionSpan').attr('class','following');
                 }else if(data.errCode == 3){
                     alert(data.errCode+data.errMsg);
                     window.location.href="/login";
@@ -328,7 +337,64 @@ $(function() {
             }
         });
     });
-
+    //判断是否关注
+    function isfollow(userId){
+        $.ajax({
+            url:'/userfollow/isfollow?userId='+userId,
+            type:'get',
+            dataType:'json',
+            contentType: false,
+            processData: false,
+            cache: false,
+            success:function (data) {
+                if(data.errCode == 1) {
+                    $('#followSpan').html('已关注');
+                    $('#flag').val("yes");
+                }else if(data.errCode == 4){
+                    $('#flag').val("no");
+                    $('#followSpan').html('+关注');
+                }else if(data.errCode == 3){
+                    alert(data.errCode+data.errMsg);
+                    window.location.href="/login";
+                }else{
+                    alert(data.errCode+data.errMsg);
+                }
+            }
+        });
+    }
+    $('#followSpan').click(function () {
+        var followId=$('#u-id').val();
+        console.log(followId);
+        var status=$('#flag').val();
+        var flag=0;
+        if(status=='no'){
+            flag=1;
+        }
+        $.ajax({
+            url:'/userfollow/dofollow?followId='+followId+'&flag='+flag,
+            type:'get',
+            dataType:'json',
+            contentType: false,
+            processData: false,
+            cache: false,
+            success:function (data) {
+                if(data.errCode == 1) {
+                    alert("关注成功");
+                    $('#flag').val("yes");
+                    $('#followSpan').html('已关注');
+                }else if(data.errCode == 6){
+                    alert("取消关注成功");
+                    $('#flag').val("no");
+                    $('#followSpan').html('+关注');
+                }else if(data.errCode == 3){
+                    alert(data.errCode+data.errMsg);
+                    window.location.href="/login";
+                }else{
+                    alert(data.errCode+data.errMsg);
+                }
+            }
+        });
+    });
 
 
     //实现 章节鼠标焦点 动态效果
