@@ -1,14 +1,17 @@
 package com.ouxuxi.service.impl;
 
+import com.ouxuxi.dao.CourseDao;
 import com.ouxuxi.dao.CourseSessionDao;
 import com.ouxuxi.dto.CourseSessionDto;
 import com.ouxuxi.entity.Course;
 import com.ouxuxi.entity.CourseSession;
 import com.ouxuxi.service.CourseSessionService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,6 +19,8 @@ public class CourseSessionServiceImpl implements CourseSessionService {
 
     @Resource
     private CourseSessionDao courseSessionDao;
+    @Resource
+    private CourseDao courseDao;
 
     @Override
     public List<CourseSession> getCourseSessionByCourseId(long courseId) {
@@ -38,8 +43,21 @@ public class CourseSessionServiceImpl implements CourseSessionService {
     }
 
     @Override
-    public int addCourseSessison(CourseSession courseSession) {
-        return courseSessionDao.addCourseSessison(courseSession);
+    @Transactional
+    public int addCourseSessison(CourseSession courseSession) throws Exception {
+        Course course=courseSession.getCourse();
+        course.setDel(2);
+        course.setCourseUpdateTime(new Date());
+        int num=courseDao.updateCourse(course);
+        if(num<0){
+            throw new Exception("修改课程下架失败");
+        }
+        int num1=courseSessionDao.addCourseSessison(courseSession);
+        if(num1<0){
+            throw new Exception("添加节失败");
+        }
+        if(num>0&&num1>0) return 1;
+        return 0;
     }
 
     @Override
@@ -77,5 +95,10 @@ public class CourseSessionServiceImpl implements CourseSessionService {
     @Override
     public int updateSessionStatus(int status, long sessionId) {
         return courseSessionDao.updateSessionStatus(status,sessionId);
+    }
+
+    @Override
+    public CourseSession getfirstCourseSession() {
+        return courseSessionDao.getFirstBytime();
     }
 }

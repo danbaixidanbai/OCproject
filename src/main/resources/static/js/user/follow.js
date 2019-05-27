@@ -12,67 +12,52 @@ $(function(){
     getCmsCourse();
     function getCmsCourse(){
         // 生成新条目的HTML
-        var url = '/collection/getcourse';
+        var url = '/userfollow/getuser';
         $.getJSON(url, function(data) {
             if (data.errCode==1) {
-                var collection=data.list;
-                console.log(collection);
+                var follow=data.list;
+                console.log(follow);
                 var html='';
-                var url='javascript:void(0);';
-                for(var i=0;i<collection.length;i++){
-                    var course=collection[i].course;
-                    var image=course.courseImage;
-                    var status='';
+                for(var i=0;i<follow.length;i++){
+                    var follower=follow[i].follower;
+                    var image=follower.userImage;
                     if(oc.isEmpty(image)){
-                        image='/image/course.png';
+                        image='/image/header.jpg';
                     }else{
                         image=appendString(image);
                     }
-                    if(course.del==2){
-                        url='javascript:void(0);';
-                        status='课程已下架';
-                    }else if(course.del==1){
-                        url='/course/learn?courseId='+course.courseId;
-                        status='课程正常';
-                    }
-                    html+='<tr id="'+course.courseId+'"><td style="width:600px;"><p>'
-                        +'<a href="'+url+'">'
+                    html+='<tr id="'+follower.userId+'"><td style="width:600px;"><p>'
+                        +'<a href="/user/usercourse?userId='+follower.userId+'">'
                         +'<img src="'+image+'" style="width: 180px;height:100px;float: left;">'
                         +'</a>'
                         +'<div class="ml-15 w-350" style="float:left;">'
-                        +'<a href="'+url+'">'
-                        +'<p class="ellipsis"><strong>'+course.courseName+'</strong></p>'
+                        +'<a href="/user/usercourse?userId='+follower.userId+'">'
+                        +'<p class="ellipsis"><strong>'+follower.userLoginName+'</strong></p>'
                         +'</a>'
-                        +'<p class="ellipsis-multi h-40">简介：'+course.courseContent+'</p>'
+                        +'<p class="ellipsis-multi h-40">个人简介：'+follower.userSign+'</p>'
                         +'</div></p></td>'
-                        +'<td>'
-                        /*+'<p>'+course[i].courseClassifyParent.classifyName+'/'+course[i].courseClassify.classifyName+'</p>'*/
-                        +'<p>'+course.courseCount+'人在学</p>'
-                        +'<p>'+new Date(course.courseUpdateTime).Format("yyyy-MM-dd hh:mm")+'</p>'
-                        +'</td>'
                         +'<td style="width:120px;">'
-                        +'<p>时长：'+course.courseTime+'</p>'
-                        +'<p><a href="javascript:void(0);" class="cfollow">取消收藏</a></p>'
-                        +'<p><a href="javascript:void(0);" >'+status+'</a></p>'
+                        +'<p><a href="javascript:void(0)" class="cfollow">取消关注</a></p>'
+                        +'<p><a href="/user/usercourse?userId='+follower.userId+'"">查看课程</a></p>'
                         +'</td>'
                         +'</tr>';
                 }
-                $('#course').html(html);
+                $('#follower').html(html);
             }else if(data.errCode==3){
                 alert(data.errCode+data.errMsg);
                 window.location.href="/login";
             }else if(data.errCode==2){
-                $('#course').html(data.errMsg);
+                $('#follower').html(data.errMsg);
             }else{
                 alert(data.errCode+data.errMsg);
             }
         });
     }
-    $('#course').on('click','.cfollow',function () {
-        var courseId=$(this).parent().parent().parent().attr('id');
-        console.log(courseId);
+    $('#follower').on('click','.cfollow',function () {
+        var followId=$(this).parent().parent().parent().attr('id');
+        console.log(followId);
         $.ajax({
-            url:'/collection/docollection?courseId='+courseId+'&flag=0',
+            url:'/userfollow/dofollow?followId='+followId+'&flag=0',
             type:'get',
             dataType:'json',
             contentType: false,

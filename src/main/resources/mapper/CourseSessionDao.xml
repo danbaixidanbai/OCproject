@@ -42,6 +42,14 @@
         order by course_session_create_time
     </select>
 
+    <select id="getFirstBytime" resultMap="courseSession">
+        select
+        <include refid="allColumns"/>
+        where parent!=0
+        order by course_session_create_time
+        limit 0,1
+    </select>
+
     <select id="queryCourseSessionByCourseId" resultMap="courseSession">
         select
         <include refid="allColumns"/>

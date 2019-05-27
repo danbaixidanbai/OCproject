@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -56,5 +58,51 @@ public class CmsController {
         }
         map.put("errCode",1);
         return map;
+    }
+
+    @GetMapping(value = "/getalluser")
+    private Map<String,Object> getAllUser(HttpServletRequest request){
+        Map<String,Object> map=new HashMap<String,Object>();
+        List<User> list=userService.getAllUser();
+        if (list.size()>0){
+            map.put("errCode",1);
+            map.put("list",list);
+            return map;
+        }else{
+            map.put("errCode",2);
+            map.put("errMsg","获取user为空");
+            return map;
+        }
+    }
+
+    @PostMapping(value = "/user/setjy")
+    private Map<String,Object> userSetJy (HttpServletRequest request) throws Exception {
+        Map<String,Object> map=new HashMap<String,Object>();
+        long userId=HttpServletRequestUtil.getLong(request,"userId");
+        int del=HttpServletRequestUtil.getInt(request,"del");
+        if(userId<0){
+            map.put("errCode",2);
+            map.put("errMsg","获取userId出错");
+            return map;
+        }
+        if(del<0){
+            map.put("errCode",3);
+            map.put("errMsg","获取del出错");
+            return map;
+        }
+        User user=new User();
+        user.setUserId(userId);
+        user.setDel(del);
+        user.setUserUpdateTime(new Date());
+        int num=userService.updateUser(user);
+        if(num>0){
+            map.put("errCode",1);
+            return map;
+        }else{
+            map.put("errCode",4);
+            map.put("errMsg","修改出错");
+            return map;
+        }
+
     }
 }

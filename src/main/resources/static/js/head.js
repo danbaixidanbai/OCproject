@@ -23,7 +23,7 @@ $(function(){
                     }else{
                         img='http://cdn.poipoipo.top/'+user.userImage;
                     }
-                    html += '<a href="/home" class="header-nav-item"  style="margin-left:0px;width:40px;height:40px;" id="userdetail">'
+                    html += '<a href="/info" class="header-nav-item"  style="margin-left:0px;width:40px;height:40px;" id="userdetail">'
                         + '<img id="headerUser" alt="" src="' + img + '"style="width: 35px;height:35px;border-radius:100%;">'
                         + '</a>';
                     $('#headerUserHeader').html(html);
@@ -42,7 +42,7 @@ $(function(){
                         + '<div id="curCourseSectionSpan" class="ellipsis"  style="font-size: 14px;width:220px;height:30px;overflow:hidden;" title=""></div>'
                         + '</a></div>'
                         + '<div style="margin-top:20px;border-top:1px solid #eee;width:200px;padding-top:10px;">'
-                        + '<a class="link-a" href="/logout">'
+                        + '<a class="link-a" href="/loginout">'
                         + '<span>退出</span>'
                         + '</a></div>'
                         + '</div></div>';

@@ -129,4 +129,11 @@
         </where>
     </select>
 
+    <update id="updateCourseCount" parameterType="java.lang.Long">
+        update tb_course
+        set
+        course_count=course_count+1
+        where course_id=#{courseId}
+    </update>
+
 </mapper>

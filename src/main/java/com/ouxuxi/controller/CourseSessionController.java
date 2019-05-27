@@ -4,10 +4,12 @@ import com.ouxuxi.dto.CourseSessionDto;
 import com.ouxuxi.entity.Course;
 import com.ouxuxi.entity.CourseSession;
 import com.ouxuxi.entity.User;
+import com.ouxuxi.entity.UserCourseSession;
 import com.ouxuxi.service.CourseSessionService;
 import com.ouxuxi.service.UserCourseSessionService;
 import com.ouxuxi.util.HttpServletRequestUtil;
 import com.ouxuxi.util.QiniuCloudUtil;
+import javafx.scene.chart.ValueAxis;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,7 +82,7 @@ public class CourseSessionController {
     }
 
     @GetMapping(value = "/addsession")
-    private Map<String,Object> addCourseSession(HttpServletRequest request){
+    private Map<String,Object> addCourseSession(HttpServletRequest request) throws Exception {
         Map<String,Object> map=new HashMap<String,Object>();
         long courseId= HttpServletRequestUtil.getLong(request,"courseId");
         String sessionName=HttpServletRequestUtil.getString(request,"sessionName");
@@ -186,5 +188,36 @@ public class CourseSessionController {
         map.put("courseSession",courseSession);
         map.put("errCode",1);
         return map;
+    }
+
+    @GetMapping(value = "/getlasted")
+    private Map<String,Object> getlasted(HttpServletRequest request){
+        Map<String, Object> map = new HashMap<String, Object>();
+        long courseId=HttpServletRequestUtil.getLong(request,"courseId");
+        if(courseId<0){
+            map.put("errCode",2);
+            map.put("errMsg","获取courseId失败");
+            return map;
+        }
+        User user= (User) request.getSession().getAttribute("user");
+        if(user==null||user.getUserId()<0){
+            map.put("errCode",3);
+            map.put("errMsg","请重新登录");
+            return map;
+        }
+        UserCourseSession userCourseSession=userCourseSessionService.getLastSession(courseId,user.getUserId());
+        CourseSession courseSession;
+        if(userCourseSession==null){
+            courseSession=courseSessionService.getfirstCourseSession();
+            map.put("errCode",1);
+            map.put("courseSession",courseSession);
+            return map;
+        }else{
+            courseSession=courseSessionService.getCourseSessionBySessionId(userCourseSession.getCourseSessionId());
+            map.put("errCode",5);
+            map.put("courseSession",courseSession);
+            return map;
+        }
+
     }
 }

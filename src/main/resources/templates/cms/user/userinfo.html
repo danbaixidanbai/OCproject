@@ -8,39 +8,47 @@
         <meta name="description" content="">
 	   <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 	   <link href="/css/style.css" rel="stylesheet" type="text/css"/>
-	   <link rel="stylesheet" href="/css/reset.css" type="text/css" />
 	   <script type="text/javascript" src="/js/common/jquery.js"></script>
 	   <script type="text/javascript" src="/js/common/common.js" charset='utf-8'></script>
 	   <script type="text/javascript" src="/js/common/bootstrap-paginator.js"></script>
 	   <script type="text/javascript" src="/js/common/bootstrap.min.js"></script>
-	   <script type='text/javascript' src='/js/headtest.js' charset='utf-8'></script>
-	   <script type="text/javascript" src="/js/user/collection.js"></script>
+	   <script type="text/javascript" src="/js/cms/cmshead.js"></script>
+	   <script type="text/javascript" src="/js/cms/user/userinfo.js"></script>
 	   <!-- 引入资源文件 -->
-	   <div th:replace="common/userhead :: userhead"></div>
+	   <div th:replace="common/cmshead :: cmshead"></div>
    </head>
    
    <body>
 
 	<div class="content">
 		<div class="container-fluid">
+			
 			<div class="mt-15">
 			<div class="row-fluid">
-				<h3>我的收藏课程</h3>
+				<h3>用户信息管理</h3>
 			</div>
+			
 			<div class="row-fluid">
 				<div class="block span6">
 					<div id="widget2container" class="block-body">
 						<table class="table list">
-							<tbody id="course">
+							<tbody id="user">
 							</tbody>
 						</table>
+
+						
 					</div>
 				</div>
 			</div>
 			</div>
 			
 		</div>
+		<div class="page">
+			<ul class="pagination"></ul>
+		</div>
+		<!-- 分页-end -->
 	</div>
+	
 	<!-- 弹出层 alert 信息 -->  
     <div class="modal" id="_ocDialogModal" tabindex="-1" aria-hidden="true">
 		<div class="modal_wapper small">

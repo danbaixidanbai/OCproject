@@ -10,10 +10,11 @@ public interface CourseSessionService {
     List<CourseSession> getCourseSessionByParent(int parent);
     CourseSession getCourseSessionBySessionId(long courseSessionId);
     int updateCourseSession(CourseSession courseSession);
-    int addCourseSessison(CourseSession courseSession);
+    int addCourseSessison(CourseSession courseSession) throws Exception;
     int delCourseSessionBySessionId(long courseSessionId);
     int delCourseSessionByCourseId(long courseId);
 
     List<CourseSessionDto> getCourseSessionDto(long courseId);
     int updateSessionStatus(int status,long sessionId);
+    CourseSession getfirstCourseSession();
 }

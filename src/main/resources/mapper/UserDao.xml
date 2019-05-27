@@ -10,7 +10,7 @@
     </select>-->
     <sql id="All_Columns">
         user_id,user_login_name,user_name,user_password,user_image,user_type,user_gender,user_birthday,user_sign
-        ,user_mobile,user_create_time,user_update_time
+        ,user_mobile,user_create_time,user_update_time,del
     </sql>
 
     <select id="getAdmin" resultType="com.ouxuxi.entity.User">
@@ -39,6 +39,13 @@
         <include refid="All_Columns" />
         from tb_user
         where user_login_name=#{userLoginName}
+    </select>
+
+    <select id="queryAllUser" resultType="com.ouxuxi.entity.User">
+        SELECT
+        <include refid="All_Columns" />
+        FROM tb_user
+        order by user_create_time desc
     </select>
 
     <insert id="addUser" parameterType="com.ouxuxi.entity.User" useGeneratedKeys="true" keyProperty="userId"  keyColumn="user_id">
@@ -79,11 +86,12 @@
             <if test="user.userName!=null">user_name=#{user.userName},</if>
             <if test="user.userPassword!=null">user_password=#{user.userPassword},</if>
             <if test="user.userImage!=null">user_image=#{user.userImage},</if>
-            <if test="user.userGender!=null">user_gender=#{user.userGender},</if>
+            <if test="user.userGender!=null and user.userGender gt 0">user_gender=#{user.userGender},</if>
             <if test="user.userBirthday!=null">user_birthday=#{user.userBirthday},</if>
             <if test="user.userSign!=null">user_sign=#{user.userSign},</if>
             <if test="user.userMobile!=null">user_mobile=#{user.userMobile},</if>
             <if test="user.userUpdateTime!=null">user_update_time=#{user.userUpdateTime},</if>
+            <if test="user.del!=null">del=#{user.del}</if>
         </set>
         WHERE user_id=#{user.userId}
     </update>

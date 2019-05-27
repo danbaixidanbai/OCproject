@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -49,6 +50,10 @@ public class UserController {
         user=mapper.readValue(userStr,User.class);
         User userDemo=userService.getByUsernameAndPassword(user);
         if(userDemo!=null ){
+            if(userDemo.getDel()<=0){
+                map.put("errCode",3);
+                return map;
+            }
             request.getSession().setAttribute("user",userDemo);
             map.put("errCode",0);
             return map;
@@ -91,7 +96,7 @@ public class UserController {
         User user=(User)request.getSession().getAttribute("user");
         if(user==null||user.getUserId()<=0){
             map.put("errCode",2);
-            map.put("errMsg","登录已过期，请重新登录！！！");
+            map.put("errMsg","你还没登录！！！");
             return map;
         }
         long userId=user.getUserId();
@@ -128,14 +133,15 @@ public class UserController {
                 return map;
             }
         }
+        user.setDel(1);
         user.setUserUpdateTime(new Date());
         int num=userService.updateUser(user);
         if(num>0){
-            if(headImage!=null&& !headImage.equals("")&&flag==true){
+            if(headImage!=null&& !headImage.equals("")&& !headImage.equals("undefined")&&flag==true){
                 QiniuCloudUtil.deleteImage(headImage);
-                User userDemo=userService.getUserById(user.getUserId());
-                request.getSession().setAttribute("user",userDemo);
             }
+            User userDemo=userService.getUserById(user.getUserId());
+            request.getSession().setAttribute("user",userDemo);
             map.put("errCode",1);
             return map;
         }else{
@@ -164,4 +170,5 @@ public class UserController {
         map.put("user",userDemo);
         return map;
     }
+
 }

@@ -31,7 +31,7 @@
         <where>
             <if test="userCourseSession.userId!=null">and user_id=#{userCourseSession.userId}</if>
             <if test="userCourseSession.courseId!=null and userCourseSession.courseId gt 0 ">and course_id=#{userCourseSession.courseId}</if>
-            <if test="userCourseSession.courseSessionId!=null">and course_session_id=#{userCourseSession.courseSessionId}</if>
+            <if test="userCourseSession.courseSessionId!=null and userCourseSession.courseSessionId gt 0">and course_session_id=#{userCourseSession.courseSessionId}</if>
         </where>
         ORDER BY user_course_session_update_time DESC
         limit 0,1

@@ -104,7 +104,9 @@ $(function(){
 
     $("#session").on('click','.addtitle',function (e) {
         sessionParent=$(e.target).parent().parent().attr('id');
-        $("#addsessiontitle").modal('show');
+        if(confirm('该操作会导致课程下架，确定吗?')){
+            $("#addsessiontitle").modal('show');
+        }
         console.log(sessionParent);
     });
 
@@ -129,12 +131,19 @@ $(function(){
             contentType : false,
             processData : false,
             cache : false,
+            beforeSend: function () {
+                var html='<img id="load" src="/image/loading.gif"/>';
+                $('#load').html(html);
+            },
             success:function (data) {
                 if(data.errCode==1){
                     window.location.reload();
                 }else{
                     alert(data.errCode+data.errMsg);
                 }
+            },
+            complete: function () {
+                $('#load').remove();
             }
         });
     });

@@ -22,7 +22,7 @@ $(function () {
                     var user=data.user;
                     var img=user.userImage;
                     headImage=cutString(img);
-                    if(img==null || img==''||img=='null')
+                    if(oc.isEmpty(img))
                     img='/image/header.jpg';
                    }
                    userId=user.userId;
@@ -68,8 +68,10 @@ $(function () {
 
         var formData=new FormData();
         formData.append("userStr",JSON.stringify(user));
+        if(!oc.isEmpty(headImage)){
+            formData.append("headImage",headImage);
+        }
         formData.append("userImage",userImage);
-        formData.append("headImage",headImage);
 
         $.ajax({
             url:'/user/updateuser',

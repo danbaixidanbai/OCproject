@@ -90,4 +90,24 @@ public class UserFollowController {
         map.put("errMsg","修改关注失败");
         return map;
     }
+    @GetMapping(value = "/getuser")
+    private Map<String,Object> getuser(HttpServletRequest request){
+        Map<String,Object> map=new HashMap<String,Object>();
+        User user= (User) request.getSession().getAttribute("user");
+        if(user==null&&user.getUserId()<0){
+            map.put("errCode",3);
+            map.put("errMsg","请重新登录");
+            return map;
+        }
+        List<UserFollow> list=userFollowService.getAll(user.getUserId(),0);
+        if(list.size()>0){
+            map.put("errCode",1);
+            map.put("list",list);
+            return map;
+        }else{
+            map.put("errCode",2);
+            map.put("errMsg","你还没有关注用户！");
+            return map;
+        }
+    }
 }

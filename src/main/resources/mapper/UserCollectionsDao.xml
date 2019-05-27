@@ -21,6 +21,7 @@
             <result column="course_count" property="courseCount"/>
             <result column="course_update_time" property="courseUpdateTime"/>
             <result column="course_time" property="courseTime"/>
+            <result column="del" property="del"/>
         </association>
     </resultMap>
 
@@ -28,7 +29,7 @@
         user_collections_id,tips,user_collections_update_time,user_collections_create_time,
         tb_user_collections.user_id,tb_user.user_name,
         tb_user_collections.course_id,tb_course.course_name,tb_course.course_content,tb_course.course_image,
-        tb_course.course_count,tb_course.course_update_time,course_time
+        tb_course.course_count,tb_course.course_update_time,course_time,tb_course.del
         from tb_user_collections
         left join tb_user on tb_user_collections.user_id=tb_user.user_id
         left join tb_course on tb_user_collections.course_id=tb_course.course_id

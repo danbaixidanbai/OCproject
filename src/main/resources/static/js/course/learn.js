@@ -19,8 +19,9 @@ $(function() {
                 } else if (data.errCode == 1) {
                     getCourseById();
                     getSessionById();
-                    var user = data.user;
-                    var userId = user.userId;
+                    getLasted();
+                   /* var user = data.user;
+                    var userId = user.userId;*/
                 }
             }
         });
@@ -116,7 +117,7 @@ $(function() {
 
     function getComment(userId) {
         $.ajax({
-            url:'/coursecomment/getcommentbycourseid?courseId='+courseId,
+            url:'/coursecomment/getcomment?courseId='+courseId,
             type:'get',
             dataType:'json',
             contentType: false,
@@ -275,7 +276,21 @@ $(function() {
             cache: false,
             success:function (data) {
                 if (data.errCode == 1) {
-
+                    var courseSession=data.courseSession;
+                    var html='/course/video?sessionId='+courseSession.courseSessionId;
+                    $('#studytext').html("你还没开始学习");
+                    $("#study").attr('href',html);
+                }else if(data.errCode == 5) {
+                    var courseSession=data.courseSession;
+                    var html='/course/video?sessionId='+courseSession.courseSessionId;
+                    $('#studytext').html(courseSession.courseSessionName);
+                    $("#study").attr('href',html);
+                    $("#study").text("继续学习");
+                }else if(data.errCode == 3){
+                    alert(data.errCode+data.errMsg);
+                    window.location.href="/login";
+                }else{
+                    alert(data.errCode+data.errMsg);
                 }
             }
         });

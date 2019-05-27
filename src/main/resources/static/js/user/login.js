@@ -44,6 +44,10 @@ $(function(){
                     $('#errorMsg').show();
                     $('#errorMsg').html("验证码输入错误！");
                     $('#captcha_img').click();
+                }else if(resp.errCode == 3){
+                    $('#errorMsg').show();
+                    $('#errorMsg').html("该账户已被禁用！");
+                    $('#captcha_img').click();
                 }
             }
         });

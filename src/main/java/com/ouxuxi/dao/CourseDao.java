@@ -13,5 +13,6 @@ public interface CourseDao {
     Course queryCourseById(long courseId);
     List<Course> queryCourseList(@Param("course") Course course,@Param("pageIndex")int pageIndex,@Param("pageSize")int pageSize);
     Integer queryCourseCount(@Param("course") Course course);
+    int updateCourseCount(long courseId);
 
 }

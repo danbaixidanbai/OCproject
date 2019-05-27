@@ -208,4 +208,26 @@ public class CourseController {
         }
         return map;
     }
+    @GetMapping(value = "/getcoursebyuid")
+    private Map<String,Object> getCourseByUid(long userId){
+        Map<String, Object> map = new HashMap<String, Object>();
+        if(userId<0){
+            map.put("errCode", 2);
+            map.put("errMsg", "加载关注用户id失败");
+        }
+        Course course=new Course();
+        User user=new User();
+        user.setUserId(userId);
+        course.setUser(user);
+        course.setDel(1);
+        List<Course> list=courseService.getCourseByCondition(course,1,1000);
+        if (list.size()>0){
+            map.put("list", list);
+            map.put("errCode", 1);
+        }else{
+            map.put("errCode", 3);
+            map.put("errMsg", "该用户还没有添加课程！！");
+        }
+        return map;
+    }
 }

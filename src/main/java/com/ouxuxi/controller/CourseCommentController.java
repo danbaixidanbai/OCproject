@@ -24,26 +24,35 @@ public class CourseCommentController {
     @Resource
     private CourseCommentService courseCommentService;
 
-    @GetMapping(value = "/getcommentbycourseid")
+    @GetMapping(value = "/getcomment")
     public Map<String,Object> getCommentByCourseId(HttpServletRequest request){
         Map<String,Object> map=new HashMap<String,Object>();
         Long courseId= HttpServletRequestUtil.getLong(request,"courseId");
-        if(courseId<0){
+        Long sessionId= HttpServletRequestUtil.getLong(request,"sessionId");
+        CourseComment courseComment=new CourseComment();
+        if(courseId>0){
+            courseComment.setCourseId(courseId);
+        }
+        if(sessionId>0){
+            courseComment.setCourseSessionId(sessionId);
+        }
+        List<CourseCommentDto> list=courseCommentService.getComment(courseComment);
+        if(list.size()>0){
+            map.put("errCode",1);
+            map.put("courseCommentDto",list);
+            return map;
+        }else{
             map.put("errCode",2);
-            map.put("errMsg","courseId为空");
+            map.put("errMsg","还没有人评论哎");
             return map;
         }
-        CourseComment courseComment=new CourseComment();
-        courseComment.setCourseId(courseId);
-        List<CourseCommentDto> list=courseCommentService.getComment(courseComment);
-        map.put("errCode",1);
-        map.put("courseCommentDto",list);
-        return map;
+
     }
     @PostMapping(value = "/addcomment")
     private Map<String,Object> addComment(HttpServletRequest request){
         Map<String,Object> map=new HashMap<String,Object>();
         Long courseId= HttpServletRequestUtil.getLong(request,"courseId");
+        Long sessionId= HttpServletRequestUtil.getLong(request,"sessionId");
         String comment=HttpServletRequestUtil.getString(request,"comment");
         User user= (User) request.getSession().getAttribute("user");
         if(user==null&&user.getUserId()<0){
@@ -51,15 +60,17 @@ public class CourseCommentController {
             map.put("errMsg","请重新登录");
             return map;
         }
-        if(courseId<0){
-            map.put("errCode",2);
-            map.put("errMsg","courseId为空");
-            return map;
-        }
         CourseComment courseComment=new CourseComment();
+        if(courseId>0){
+            courseComment.setCourseId(courseId);
+        }
+        if(sessionId>0){
+            courseComment.setCourseSessionId(sessionId);
+        }
         courseComment.setCourseId(courseId);
         courseComment.setUser(user);
         courseComment.setCourseCommentContent(comment);
+
         courseComment.setCreateTime(new Date());
         courseComment.setUpdateTime(new Date());
         int num=courseCommentService.addCourseComment(courseComment);

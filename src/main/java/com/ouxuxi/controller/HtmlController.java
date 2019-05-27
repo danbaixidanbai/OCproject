@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 
 //负责html路由的controller
@@ -68,6 +69,11 @@ public class HtmlController {
         return "cms/course/courseinfo";
     }
 
+    @RequestMapping(value = "/cms/user/userinfo")
+    public String cmsUserInfo(){
+        return "cms/user/userinfo";
+    }
+
     @RequestMapping(value = "/course/courseinfo")
     public String courseInfo(){
         return "course/courseinfo";
@@ -96,5 +102,27 @@ public class HtmlController {
     @RequestMapping(value = "/user/collection")
     public String userCollection(){
         return "user/collection";
+    }
+
+    @RequestMapping(value = "/user/follow")
+    public String userFollow(){
+        return "user/follow";
+    }
+
+    @RequestMapping(value = "/user/usercourse")
+    public String userCourse(){
+        return "user/usercourse";
+    }
+
+    @RequestMapping(value = "/loginout")
+    public String loginout(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        return "index";
+    }
+
+    @RequestMapping(value = "/cms/loginout")
+    public String cmsloginout(HttpServletRequest request){
+        request.getSession().removeAttribute("admin");
+        return "cms/cmslogin";
     }
 }

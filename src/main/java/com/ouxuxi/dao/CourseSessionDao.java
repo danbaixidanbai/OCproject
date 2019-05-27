@@ -15,4 +15,6 @@ public interface CourseSessionDao {
     int delCourseSessionBySessionId(long courseSessionId);
     int delCourseSessionByCourseId(long courseId);
     int updateSessionStatus(@Param("status")int status,@Param("sessionId")long sessionId);
+
+    public CourseSession getFirstBytime();
 }
