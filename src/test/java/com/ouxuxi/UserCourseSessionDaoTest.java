@@ -44,11 +44,11 @@ public class UserCourseSessionDaoTest {
         int num=userCourseSessionDao.update(userCourseSession);
         System.out.println("num:"+num);
     }
-    @Test
+   /* @Test
     public void getByIdTest(){
         UserCourseSession userCourseSession=userCourseSessionDao.getById(1);
         System.out.println(userCourseSession.toString());
-    }
+    }*/
     @Test
     public void getAllTest(){
         UserCourseSession userCourseSession=new UserCourseSession();

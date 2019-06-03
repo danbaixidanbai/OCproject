@@ -82,6 +82,7 @@ public class UserController {
         }
         user.setUserCreateTime(new Date());
         user.setUserUpdateTime(new Date());
+        user.setDel(1);
         int num=userService.addUser(user);
         if(num>0){
             map.put("errCode",0);
